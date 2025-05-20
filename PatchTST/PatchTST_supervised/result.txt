@@ -1,0 +1,9 @@
+national_illness_104_24_DLinear_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.963897466659546, mae:0.9745134711265564, rse:0.6762874722480774
+
+national_illness_104_24_Simon_Conv_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.3398709297180176, mae:0.9701776504516602, rse:0.7381895184516907
+
+national_illness_104_24_Simon_Conv_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.3398709297180176, mae:0.9701776504516602, rse:0.7381895184516907
+
