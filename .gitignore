@@ -104,6 +104,8 @@ PatchTST/PatchTST_supervised/dataset/
 miniconda3/
 Miniconda3-latest-Linux-x86_64.shminiconda3/
 temp/
+PatchTST/PatchTST_supervised/results/
+PatchTST/PatchTST_supervised/test_results/
 
 *.pdf
 *.pth
