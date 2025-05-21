@@ -4,6 +4,7 @@ import torch
 from exp.exp_main import Exp_Main
 import random
 import numpy as np
+import wandb
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Autoformer & Transformer family for Time Series Forecasting')
@@ -112,6 +113,13 @@ if __name__ == '__main__':
     print('Args in experiment:')
     print(args)
 
+    wandb.init(
+        entity="simonkral99",
+        project="Thesis_MTSF",
+        config=vars(args),  # automatically logs CLI args
+        name=f"run_{args.model}_{args.data}_{args.seq_len}"
+    ) 
+
     Exp = Exp_Main
 
     if args.is_training:
@@ -171,3 +179,4 @@ if __name__ == '__main__':
         exp.test(setting, test=1)
         torch.cuda.empty_cache()
         
+        wandb.finish()

@@ -17,6 +17,8 @@ import warnings
 import matplotlib.pyplot as plt
 import numpy as np
 
+import wandb
+
 warnings.filterwarnings('ignore')
 
 class Exp_Main(Exp_Basic):
@@ -211,6 +213,14 @@ class Exp_Main(Exp_Basic):
                 adjust_learning_rate(model_optim, scheduler, epoch + 1, self.args)
             else:
                 print('Updating learning rate to {}'.format(scheduler.get_last_lr()[0]))
+
+            # Log to wandb:
+            wandb.log({
+                "epoch": epoch,
+                "train_loss": train_loss,
+                "val_loss": vali_loss,
+                "test_loss": test_loss
+            })
 
         best_model_path = path + '/' + 'checkpoint.pth'
         self.model.load_state_dict(torch.load(best_model_path))
