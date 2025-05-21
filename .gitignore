@@ -98,16 +98,14 @@ wandb/
 
 
 
-
-*.sh
-*.json
-
-
 # dir
 BasicTS/datasets/
 PatchTST/PatchTST_supervised/dataset/
 miniconda3/
 Miniconda3-latest-Linux-x86_64.shminiconda3/
 temp/
+
+*.pdf
+*.pth
 *.sh
 *.json
