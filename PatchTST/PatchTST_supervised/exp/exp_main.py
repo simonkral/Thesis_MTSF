@@ -321,6 +321,14 @@ class Exp_Main(Exp_Basic):
         np.save(folder_path + 'pred.npy', preds)
         # np.save(folder_path + 'true.npy', trues)
         # np.save(folder_path + 'x.npy', inputx)
+
+        # Log to wandb:
+        wandb.log({
+            "mse": mse,
+            "mae": mae,
+            "rse": rse
+        })
+
         return
 
     def predict(self, setting, load=False):
