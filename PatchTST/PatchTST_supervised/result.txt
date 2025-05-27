@@ -10,3 +10,33 @@ mse:2.3398709297180176, mae:0.9701776504516602, rse:0.7381895184516907
 national_illness_104_24_DLinear_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
 mse:1.963897466659546, mae:0.9745134711265564, rse:0.6762874722480774
 
+national_illness_104_24_DLinear_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.963897466659546, mae:0.9745134711265564, rse:0.6762874722480774
+
+national_illness_104_24_DLinear_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.963897466659546, mae:0.9745134711265564, rse:0.6762874722480774
+
+ETTh1_336_96_DLinear_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3728347420692444, mae:0.3953787386417389, rse:0.5799785852432251
+
+ETTh2_336_96_DLinear_ETTh2_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.27866607904434204, mae:0.3441021740436554, rse:0.42538565397262573
+
+ETTm1_336_96_DLinear_ETTm1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3027706742286682, mae:0.3464268147945404, rse:0.523582935333252
+
+national_illness_104_36_DLinear_custom_ftM_sl104_ll18_pl36_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.0803866386413574, mae:0.9980451464653015, rse:0.6973117589950562
+
+national_illness_104_48_DLinear_custom_ftM_sl104_ll18_pl48_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.0640652179718018, mae:1.0025016069412231, rse:0.6900765299797058
+
+national_illness_104_60_DLinear_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.2735347747802734, mae:1.0759693384170532, rse:0.7205029129981995
+
+ETTm1_336_192_DLinear_ETTm1_ftM_sl336_ll48_pl192_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.3369397521018982, mae:0.36797070503234863, rse:0.552551805973053
+
+traffic_336_96_DLinear_custom_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.41029587388038635, mae:0.2822222113609314, rse:0.5302300453186035
+
