@@ -35,7 +35,7 @@ if __name__ == '__main__':
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
     # DWSC - Simon
-    parser.add_argument('--kernel_size', type=int, default=5, help='convolution kernel size')
+    parser.add_argument('--conv_kernel_size', type=int, default=5, help='convolution kernel size')
     parser.add_argument('--n_blocks', type=int, default=1, help='number of blocks')
 
     # DLinear

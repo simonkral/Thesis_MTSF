@@ -42,7 +42,7 @@ class Model(nn.Module):
         self.pred_len = configs.pred_len
         self.enc_in = configs.enc_in
 
-        self.kernel_size = configs.kernel_size
+        self.kernel_size = configs.conv_kernel_size
         self.n_blocks = configs.n_blocks
 
         # model
