@@ -109,5 +109,10 @@ PatchTST/PatchTST_supervised/test_results/
 
 *.pdf
 *.pth
-*.sh
 *.json
+
+# Ignore all .sh files
+*.sh
+
+# But do not ignore .sh files in a specific folder (e.g., scripts/)
+!PatchTST/PatchTST_supervised/scripts/*.sh
