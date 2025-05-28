@@ -52,3 +52,30 @@ mse:0.4225722849369049, mae:0.28739771246910095, rse:0.5363330245018005
 traffic_336_336_DLinear_custom_ftM_sl336_ll48_pl336_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
 mse:0.4355081021785736, mae:0.2952694296836853, rse:0.5422412753105164
 
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.339893102645874, mae:0.970181941986084, rse:0.7381930351257324
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.2839677333831787, mae:0.94146329164505, rse:0.7221541404724121
+
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.7383055686950684, mae:1.0852603912353516, rse:0.7985697984695435
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.8301594257354736, mae:1.1071616411209106, rse:0.8038784265518188
+
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.3134517669677734, mae:0.9777731895446777, rse:0.7340103387832642
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.3081748485565186, mae:0.9887111186981201, rse:0.725970983505249
+
+ETTh1_104_720_Simon_DWSC_ETTh1_ftM_sl104_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.46112993359565735, mae:0.4572162926197052, rse:0.6450085043907166
+
+ETTh1_104_720_Simon_DWSC_ETTh1_ftM_sl104_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.0457614660263062, mae:0.8230029940605164, rse:0.979475200176239
+
+ETTh1_104_720_Simon_DWSC_ETTh1_ftM_sl104_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.4295559227466583, mae:0.43220409750938416, rse:0.6225347518920898
+

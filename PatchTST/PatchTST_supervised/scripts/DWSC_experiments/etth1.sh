@@ -22,28 +22,27 @@ fi
 seq_len=104
 model_name=Simon_DWSC
 
-for conv_kernel_size in 17
+for conv_kernel_size in 9
 do
     for n_blocks in 1
     do
-        for pred_len in 24 60
+        for pred_len in 96 720
         do
         python -u run_longExp.py \
             --is_training 1 \
             --root_path ./dataset/ \
-            --data_path national_illness.csv \
-            --model_id national_illness_$seq_len'_'$pred_len \
+            --data_path ETTh1.csv \
+            --model_id ETTh1_$seq_len'_'720 \
             --model $model_name \
-            --data custom \
+            --data ETTh1 \
             --features M \
             --seq_len $seq_len \
-            --label_len 18 \
             --pred_len $pred_len \
             --conv_kernel_size $conv_kernel_size \
             --n_blocks $n_blocks \
             --enc_in 7 \
             --des 'Exp' \
-            --itr 1 --batch_size 32 --learning_rate 0.01 >logs/LongForecasting/$model_name'_'ili_$seq_len'_'$pred_len'_kernel'$conv_kernel_size'_blocks'$n_blocks.log
+            --itr 1 --batch_size 32 --learning_rate 0.005 >logs/LongForecasting/$model_name'_'Etth1_$seq_len'_'$pred_len'_kernel'$conv_kernel_size'_blocks'$n_blocks.log
         done
     done
 done
