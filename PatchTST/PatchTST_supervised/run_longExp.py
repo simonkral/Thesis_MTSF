@@ -34,6 +34,9 @@ if __name__ == '__main__':
     parser.add_argument('--label_len', type=int, default=48, help='start token length')
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
+    # DWSC - Simon
+    parser.add_argument('--kernel_size', type=int, default=5, help='convolution kernel size')
+    parser.add_argument('--n_blocks', type=int, default=1, help='number of blocks')
 
     # DLinear
     #parser.add_argument('--individual', action='store_true', default=False, help='DLinear: a linear layer for each variate(channel) individually')
