@@ -5,8 +5,9 @@ import numpy as np
 
 
 class DepthwiseSeparableBlock(nn.Module):
-    def __init__(self, channels, kernel_size=5):
+    def __init__(self, channels, kernel_size):
         super(DepthwiseSeparableBlock, self).__init__()
+        
         self.depthwise = nn.Conv1d(
             in_channels=channels,
             out_channels=channels,
@@ -30,17 +31,23 @@ class DepthwiseSeparableBlock(nn.Module):
 
 class Model(nn.Module):
     """
-    Implements num_blocks of depthwise separable convolutions with kernel size 5 and a linear prediction head
+    Implements configs.n_blocks of depthwise separable convolutions with kernel size configs.kernel_size and a linear prediction head
     """
 
-    def __init__(self, configs, num_blocks=3):
+    def __init__(self, configs):
         super(Model, self).__init__()
+        
+        # load parameters
         self.seq_len = configs.seq_len
         self.pred_len = configs.pred_len
         self.enc_in = configs.enc_in
 
+        self.kernel_size = configs.kernel_size
+        self.n_blocks = configs.n_blocks
+
+        # model
         self.blocks = nn.Sequential(
-            *[DepthwiseSeparableBlock(self.enc_in) for _ in range(num_blocks)]
+            *[DepthwiseSeparableBlock(self.enc_in, self.kernel_size) for _ in range(self.n_blocks)]
         )
 
         self.linear = nn.Linear(self.seq_len, self.pred_len)
