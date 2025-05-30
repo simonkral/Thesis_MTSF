@@ -1,12 +1,12 @@
 #!/bin/bash
-#SBATCH --time=0:30:00
+#SBATCH --time=1:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=Simon_DWSC_ILI
+#SBATCH --job-name=Simon_DWSC_ETTh1
 #SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Simon_DWSC.out
 
 module load devel/cuda/11.8
@@ -19,10 +19,10 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-seq_len=104
+seq_len=336
 model_name=Simon_DWSC
 
-for conv_kernel_size in 9
+for conv_kernel_size in 3 5 9 13 17 25 33
 do
     for n_blocks in 1
     do
@@ -32,7 +32,7 @@ do
             --is_training 1 \
             --root_path ./dataset/ \
             --data_path ETTh1.csv \
-            --model_id ETTh1_$seq_len'_'720 \
+            --model_id ETTh1_$seq_len'_'$pred_len \
             --model $model_name \
             --data ETTh1 \
             --features M \

@@ -22,7 +22,7 @@ fi
 seq_len=104
 model_name=Simon_DWSC
 
-for conv_kernel_size in 17
+for conv_kernel_size in 3 13 25 33
 do
     for n_blocks in 1
     do
