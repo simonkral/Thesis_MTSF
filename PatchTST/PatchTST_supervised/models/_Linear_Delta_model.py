@@ -21,10 +21,14 @@ class Model(nn.Module):
         self.seq_len = configs.seq_len
         self.pred_len = configs.pred_len
         self.enc_in = configs.enc_in # Number of channels
-        self.cd_regularization = configs.cd_regularization
+        self.learn_cd_regularization = configs.learn_cd_regularization
+
+        if self.learn_cd_regularization:
+            self.cd_regularization = nn.Parameter(torch.tensor(0.0))
+        else:
+            self.cd_regularization = configs.cd_regularization
 
         # Delta hyperparam. 
-
         self.Linear_CI = nn.Linear(self.seq_len, self.pred_len)
         self.Linear_CD = nn.Linear(self.seq_len * self.enc_in, self.pred_len * self.enc_in)
         
