@@ -21,7 +21,7 @@ class Model(nn.Module):
         self.seq_len = configs.seq_len
         self.pred_len = configs.pred_len
         self.enc_in = configs.enc_in # Number of channels
-        self.flat_input = False # False = CI, True -> CD
+        self.flat_input = True # False = CI, True -> CD
 
         if self.flat_input:
             self.Linear = nn.Linear(self.seq_len * self.enc_in, self.pred_len * self.enc_in)
