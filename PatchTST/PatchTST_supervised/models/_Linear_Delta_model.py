@@ -21,6 +21,7 @@ class Model(nn.Module):
         self.seq_len = configs.seq_len
         self.pred_len = configs.pred_len
         self.enc_in = configs.enc_in # Number of channels
+        self.cd_regularization = configs.cd_regularization
 
         # Delta hyperparam. 
 
@@ -35,6 +36,6 @@ class Model(nn.Module):
         bz = x.size(0)
         out_CD = self.Linear_CD(x.view(bz, -1)).reshape(bz, self.pred_len, self.enc_in)
 
-        out_hybrid = out_CD + out_CI
+        out_hybrid = out_CI + self.cd_regularization * out_CD
 
         return out_hybrid # [Batch, Output length, Channel]

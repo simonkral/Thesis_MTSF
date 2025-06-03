@@ -34,6 +34,10 @@ if __name__ == '__main__':
     parser.add_argument('--label_len', type=int, default=48, help='start token length')
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
+    # Delta model - Simon
+    parser.add_argument('--cd_regularization', type=float, default=0.0,
+                        help='CD regularization coefficient, 0.0: Final model = CI, 1.0: Final model = CI + CD, 0.5: Final model = CI + 0.5 * CD')
+
     # DWSC - Simon
     parser.add_argument('--conv_kernel_size', type=int, default=5, help='convolution kernel size')
     parser.add_argument('--n_blocks', type=int, default=1, help='number of blocks')
