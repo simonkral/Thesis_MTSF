@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=1:30:00
+#SBATCH --time=1:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -22,9 +22,9 @@ fi
 seq_len=336
 model_name=Linear_Delta
 
-for cd_regularization in 0.5
+for cd_regularization in 0 0.25 0.5 0.75 1
 do
-    for pred_len in 96
+    for pred_len in 96 720
     do
         python -u run_longExp.py \
             --is_training 1 \
