@@ -85,3 +85,84 @@ mse:0.4656083881855011, mae:0.31451213359832764, rse:0.5578948259353638
 traffic_336_720_DLinear_custom_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
 mse:0.4656083881855011, mae:0.31451216340065, rse:0.5578948259353638
 
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.353053569793701, mae:1.0151482820510864, rse:0.7402660846710205
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.5048110485076904, mae:1.0356441736221313, rse:0.7562622427940369
+
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.0522000789642334, mae:0.9838139414787292, rse:0.6913242340087891
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.7651567459106445, mae:1.1165106296539307, rse:0.794593095779419
+
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.5203521251678467, mae:1.0380817651748657, rse:0.7661300897598267
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.4042627811431885, mae:1.0006784200668335, rse:0.7409278154373169
+
+national_illness_104_24_Simon_DWSC_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.9537572860717773, mae:0.8876952528953552, rse:0.6745392680168152
+
+national_illness_104_60_Simon_DWSC_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.180529832839966, mae:0.931603729724884, rse:0.7056119441986084
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.4324341416358948, mae:0.4398374855518341, rse:0.6246169805526733
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.945580780506134, mae:0.7619760036468506, rse:0.9313790202140808
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.4352988004684448, mae:0.4415786564350128, rse:0.6266824007034302
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.217475414276123, mae:0.8759235143661499, rse:1.0568350553512573
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.4319586157798767, mae:0.4371606707572937, rse:0.624273419380188
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.1046274900436401, mae:0.8314985036849976, rse:1.0066652297973633
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.441584974527359, mae:0.44860365986824036, rse:0.6311911940574646
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.15121328830719, mae:0.855979859828949, rse:1.0276732444763184
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.4667041599750519, mae:0.46610963344573975, rse:0.6488953232765198
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.3775662183761597, mae:0.943851888179779, rse:1.124173641204834
+
+traffic_336_96_Simon_DWSC_custom_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.7707974314689636, mae:0.4742680788040161, rse:0.7267513871192932
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.47547268867492676, mae:0.47775712609291077, rse:0.6549627184867859
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.5463396310806274, mae:1.0018230676651, rse:1.1910488605499268
+
+ETTh1_336_96_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.5571228861808777, mae:0.5336793065071106, rse:0.7089722752571106
+
+ETTh1_336_720_Simon_DWSC_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.176599383354187, mae:0.8774529695510864, rse:1.0389423370361328
+
+traffic_336_96_Simon_DWSC_custom_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.7975813150405884, mae:0.509823203086853, rse:0.7392702698707581
+
+traffic_336_96_Simon_DWSC_custom_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.8122613430023193, mae:0.5204019546508789, rse:0.7460426092147827
+
+traffic_336_96_Simon_DWSC_custom_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.9436290860176086, mae:0.5907313227653503, rse:0.8041117191314697
+
+traffic_336_96_Simon_DWSC_custom_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:0.914674699306488, mae:0.5783525109291077, rse:0.7916789054870605
+
