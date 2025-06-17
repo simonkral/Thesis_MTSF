@@ -116,3 +116,5 @@ PatchTST/PatchTST_supervised/test_results/
 
 # But do not ignore .sh files in a specific folder (e.g., scripts/)
 !PatchTST/PatchTST_supervised/scripts/**/*.sh
+
+paper_results.csv
