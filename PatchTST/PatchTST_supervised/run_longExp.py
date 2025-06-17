@@ -37,9 +37,11 @@ if __name__ == '__main__':
     # Delta model - Simon
     parser.add_argument('--cd_regularization', type=float, default=0.0,
                         help='Fixed CD regularization coefficient, 0.0: Final model = CI, 1.0: Final model = CI + CD, 0.5: Final model = CI + 0.5 * CD')
-    parser.add_argument('--learn_cd_regularization', type=bool, default=False, 
-                        help='Whether to learn the CD regularization coefficient or not, True: learnable (initialized with 0.0), False: fixed (set by --cd_regularization hyperparameter)')
-
+    parser.add_argument('--learn_cd_regularization', type=int, default=0, 
+                        help='Whether to learn the CD regularization coefficient or not, 1: learnable (initialized with 0.0), 0: fixed (set by --cd_regularization hyperparameter)')
+    parser.add_argument('--sigmoid', type=int, default=0, help='CD regularization coefficient is sigmoid functon')
+    parser.add_argument('--convex', type=int, default=1, help='CI + CD convex combination, 1: convex, 0: non-convex')
+                        
     # DWSC - Simon
     parser.add_argument('--conv_kernel_size', type=int, default=5, help='convolution kernel size')
     parser.add_argument('--n_blocks', type=int, default=1, help='number of blocks')
