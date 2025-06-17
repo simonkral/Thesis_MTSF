@@ -1,7 +1,7 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
 from models import Informer, Autoformer, Transformer, DLinear, Linear, NLinear, PatchTST, _Simon_DWSC, _Linear_CD, _Linear_Delta_model
-from utils.tools import EarlyStopping, adjust_learning_rate, visual, test_params_flop
+from utils.tools import UnfreezeParam, EarlyStopping, adjust_learning_rate, visual, test_params_flop
 from utils.metrics import metric
 
 import numpy as np
@@ -49,7 +49,9 @@ class Exp_Main(Exp_Basic):
         return data_set, data_loader
 
     def _select_optimizer(self):
-        model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+        base_params = [p for name, p in self.model.named_parameters() if (name != '_cd_param' and name != 'cd_regularization')]
+        model_optim = optim.Adam(base_params, lr=self.args.learning_rate)
+        #model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
         return model_optim
 
     def _select_criterion(self):
@@ -115,6 +117,8 @@ class Exp_Main(Exp_Basic):
 
         train_steps = len(train_loader)
         early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
+
+        unfreeze_param = UnfreezeParam(patience=self.args.lambda_freeze_patience)
 
         model_optim = self._select_optimizer()
         criterion = self._select_criterion()
@@ -206,6 +210,19 @@ class Exp_Main(Exp_Basic):
 
             print("Epoch: {0}, Steps: {1} | Train Loss: {2:.7f} Vali Loss: {3:.7f} Test Loss: {4:.7f}".format(
                 epoch + 1, train_steps, train_loss, vali_loss, test_loss))
+            
+            unfreeze_param(vali_loss)
+            if unfreeze_param.unfreeze:
+                print("Unfreezing model parameters")
+
+                if hasattr(self.model, '_cd_param'):
+                    self.model._cd_param.requires_grad = True
+                    model_optim.add_param_group({'params': [self.model._cd_param]})
+
+                if hasattr(self.model, 'cd_regularization'):
+                    self.model._cd_param.cd_regularization = True
+                    model_optim.add_param_group({'params': [self.model.cd_regularization]})
+
             early_stopping(vali_loss, self.model, path)
             if early_stopping.early_stop:
                 print("Early stopping")
