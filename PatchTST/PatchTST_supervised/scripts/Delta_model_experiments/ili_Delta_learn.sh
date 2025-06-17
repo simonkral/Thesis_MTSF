@@ -22,7 +22,7 @@ fi
 seq_len=104
 model_name=Linear_Delta
 
-for pred_len in 24 60
+for pred_len in 60
 do
     python -u run_longExp.py \
         --is_training 1 \
@@ -38,6 +38,7 @@ do
         --learn_cd_regularization 1 \
         --sigmoid 1 \
         --convex 1 \
+        --lambda_freeze_patience 5 \
         --enc_in 7 \
         --des 'Exp' \
         --itr 1 --batch_size 32 --patience 10 --learning_rate 0.01 >logs/LongForecasting/$model_name'_'ili_$seq_len'_'$pred_len'_cd_reg_learn'.log
