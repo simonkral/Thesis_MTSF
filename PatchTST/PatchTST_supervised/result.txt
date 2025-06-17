@@ -679,3 +679,15 @@ mse:0.19322362542152405, mae:0.2812741994857788, rse:0.5792099833488464
 weather_720_720_Linear_CD_custom_ftM_sl720_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
 mse:0.33441269397735596, mae:0.39643263816833496, rse:0.7612143158912659
 
+national_illness_104_24_Linear_Delta_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.9858744144439697, mae:0.9530196189880371, rse:0.6800609230995178
+
+national_illness_104_24_Linear_Delta_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.9799718856811523, mae:0.9424601197242737, rse:0.679049551486969
+
+national_illness_104_24_Linear_Delta_custom_ftM_sl104_ll18_pl24_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:1.9858744144439697, mae:0.9530196189880371, rse:0.6800609230995178
+
+national_illness_104_60_Linear_Delta_custom_ftM_sl104_ll18_pl60_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
+mse:2.4145822525024414, mae:1.0356261730194092, rse:0.7425162196159363
+
