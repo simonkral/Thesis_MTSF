@@ -22,9 +22,14 @@ class Model(nn.Module):
         self.pred_len = configs.pred_len
         self.enc_in = configs.enc_in # Number of channels
         self.learn_cd_regularization = configs.learn_cd_regularization
+        self.convex = configs.convex
+        self.sigmoid = configs.sigmoid
 
-        if self.learn_cd_regularization:
-            self.cd_regularization = nn.Parameter(torch.tensor(0.0))
+        if self.learn_cd_regularization == 1:
+            if self.sigmoid == 1:
+                self._cd_param = nn.Parameter(torch.tensor(-5.0))
+            else:
+                self.cd_regularization = nn.Parameter(torch.tensor(0.0))
         else:
             self.cd_regularization = configs.cd_regularization
 
@@ -40,6 +45,14 @@ class Model(nn.Module):
         bz = x.size(0)
         out_CD = self.Linear_CD(x.view(bz, -1)).reshape(bz, self.pred_len, self.enc_in)
 
-        out_hybrid = out_CI + self.cd_regularization * out_CD
+        if self.sigmoid == 1 and self.learn_cd_regularization == 1:
+            coeff = torch.sigmoid(self._cd_param)
+        else:
+            coeff = self.cd_regularization
+
+        if self.convex == 1:
+            out_hybrid = (1-coeff) * out_CI + coeff * out_CD
+        else:
+            out_hybrid = out_CI + coeff * out_CD
 
         return out_hybrid # [Batch, Output length, Channel]
