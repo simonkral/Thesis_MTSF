@@ -221,7 +221,25 @@ class Exp_Main(Exp_Basic):
                 "epoch": epoch,
                 "train_loss": train_loss,
                 "val_loss": vali_loss,
-                "test_loss": test_loss
+                "test_loss": test_loss,
+                "delta_model_lambda": (
+                    self.model.cd_regularization.item()
+                    if  hasattr(self.model, 'cd_regularization') and 
+                        hasattr(self.model, 'sigmoid') and 
+                        hasattr(self.model, 'learn_cd_regularization') and 
+                        self.model.sigmoid == 0 and 
+                        self.model.learn_cd_regularization == 1
+                    else None
+                ),
+                "delta_model_lambda-sigmoid": (
+                    torch.sigmoid(self.model._cd_param).item()
+                    if  hasattr(self.model, '_cd_param') and 
+                        hasattr(self.model, 'sigmoid') and 
+                        hasattr(self.model, 'learn_cd_regularization') and 
+                        self.model.sigmoid == 1 and 
+                        self.model.learn_cd_regularization == 1
+                    else None
+                )
             })
 
         best_model_path = path + '/' + 'checkpoint.pth'
