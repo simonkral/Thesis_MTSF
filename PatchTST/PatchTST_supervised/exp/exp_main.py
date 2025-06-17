@@ -49,9 +49,11 @@ class Exp_Main(Exp_Basic):
         return data_set, data_loader
 
     def _select_optimizer(self):
-        base_params = [p for name, p in self.model.named_parameters() if (name != '_cd_param' and name != 'cd_regularization')]
-        model_optim = optim.Adam(base_params, lr=self.args.learning_rate)
-        #model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+        if self.args.lambda_freeze_patience > 0:
+            base_params = [p for name, p in self.model.named_parameters() if ('_cd_param' not in name and 'cd_regularization' not in name)]
+            model_optim = optim.Adam(base_params, lr=self.args.learning_rate)
+        else:
+            model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
         return model_optim
 
     def _select_criterion(self):
@@ -121,6 +123,7 @@ class Exp_Main(Exp_Basic):
         unfreeze_param = UnfreezeParam(patience=self.args.lambda_freeze_patience)
 
         model_optim = self._select_optimizer()
+        frozen_param = True
         criterion = self._select_criterion()
 
         if self.args.use_amp:
@@ -212,8 +215,9 @@ class Exp_Main(Exp_Basic):
                 epoch + 1, train_steps, train_loss, vali_loss, test_loss))
             
             unfreeze_param(vali_loss)
-            if unfreeze_param.unfreeze:
+            if frozen_param and unfreeze_param.unfreeze and self.args.lambda_freeze_patience > 0:
                 print("Unfreezing model parameters")
+                frozen_param = False
 
                 if hasattr(self.model, '_cd_param'):
                     self.model._cd_param.requires_grad = True
