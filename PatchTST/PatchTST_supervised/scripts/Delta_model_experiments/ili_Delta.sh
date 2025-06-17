@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=Linear_Delta_ETTh1
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta.out
+#SBATCH --job-name=Linear_Delta_ILI
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta_ILI.out
 
 module load devel/cuda/11.8
 
@@ -19,30 +19,31 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-seq_len=336
+seq_len=104
 model_name=Linear_Delta
 
-# 0 0.25 0.5 0.75 1
-
-for cd_regularization in 0.75 1
+for cd_regularization in 0 0.25 0.5 0.75 1
 do
-    for pred_len in 96 720
+    for pred_len in 24 60
     do
         python -u run_longExp.py \
             --is_training 1 \
             --root_path ./dataset/ \
-            --data_path ETTh1.csv \
-            --model_id ETTh1_$seq_len'_'$pred_len \
+            --data_path national_illness.csv \
+            --model_id national_illness_$seq_len'_'$pred_len \
             --model $model_name \
-            --data ETTh1 \
+            --data custom \
             --features M \
             --seq_len $seq_len \
+            --label_len 18 \
             --pred_len $pred_len \
             --cd_regularization $cd_regularization \
             --sigmoid 0 \
-            --convex 1 \
+            --convex 0 \
             --enc_in 7 \
             --des 'Exp' \
-            --itr 1 --batch_size 32 --patience 10 --learning_rate 0.005 >logs/LongForecasting/$model_name'_'Etth1_$seq_len'_'$pred_len'_cd_reg'$cd_regularization.log
+            --itr 1 --batch_size 32 --patience 10 --learning_rate 0.01 >logs/LongForecasting/$model_name'_'ili_$seq_len'_'$pred_len'_cd_reg'$cd_regularization.log
     done
 done
+
+#            --convex 1 \
