@@ -9,8 +9,8 @@ class DepthwiseSeparableBlock(nn.Module):
         super(DepthwiseSeparableBlock, self).__init__()
         
         self.depthwise = nn.Conv1d(
-            in_channels=channels,
-            out_channels=channels,
+            in_channels=channels,       #1
+            out_channels=channels,      #1
             kernel_size=kernel_size,
             padding=kernel_size // 2,
             groups=channels
