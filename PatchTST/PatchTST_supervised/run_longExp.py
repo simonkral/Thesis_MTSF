@@ -41,7 +41,7 @@ if __name__ == '__main__':
                         help='Whether to learn the CD regularization coefficient or not, 1: learnable (initialized with 0.0), 0: fixed (set by --cd_regularization hyperparameter)')
     parser.add_argument('--sigmoid', type=int, default=0, help='CD regularization coefficient is sigmoid functon')
     parser.add_argument('--convex', type=int, default=1, help='CI + CD convex combination, 1: convex, 0: non-convex')
-    parser.add_argument('--lambda_freeze_patience', type=int, default=0, help='freezing patience for lambda')
+    parser.add_argument('--lambda_freeze_patience', type=int, default=0, help='freezing patience for lambda, 0: no freezing, >0: patience for freezing lambda')
                         
     # DWSC - Simon
     parser.add_argument('--conv_kernel_size', type=int, default=5, help='convolution kernel size')
