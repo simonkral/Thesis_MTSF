@@ -1,8 +1,8 @@
 from data_provider.data_factory import data_provider
 from exp.exp_basic import Exp_Basic
-from models import Informer, Autoformer, Transformer, DLinear, Linear, NLinear, PatchTST, _Simon_DWSC, _Linear_CD, _Linear_Delta_model
+from models import Informer, Autoformer, Transformer, DLinear, Linear, NLinear, PatchTST, _Simon_DWSC, _Linear_CD, _Linear_Delta_model, _Linear_Delta_regular, _Linear_final, _ModernTCN
 from utils.tools import UnfreezeParam, EarlyStopping, adjust_learning_rate, visual, test_params_flop
-from utils.metrics import metric
+from utils.metrics import metric, metric_of_channels
 
 import numpy as np
 import torch
@@ -36,7 +36,10 @@ class Exp_Main(Exp_Basic):
             'PatchTST': PatchTST,
             'Simon_DWSC': _Simon_DWSC,
             'Linear_CD': _Linear_CD,
-            'Linear_Delta': _Linear_Delta_model
+            'Linear_Delta': _Linear_Delta_model,
+            'Linear_Delta_reg': _Linear_Delta_regular,
+            'Linear_final': _Linear_final,
+            'ModernTCN': _ModernTCN
         }
         model = model_dict[self.args.model].Model(self.args).float()
 
@@ -51,9 +54,27 @@ class Exp_Main(Exp_Basic):
     def _select_optimizer(self):
         if self.args.lambda_freeze_patience > 0:
             base_params = [p for name, p in self.model.named_parameters() if ('_cd_param' not in name and 'cd_regularization' not in name)]
-            model_optim = optim.Adam(base_params, lr=self.args.learning_rate)
+            #model_optim = optim.Adam(base_params, lr=self.args.learning_rate)
+            model_optim = optim.AdamW(base_params, lr=self.args.learning_rate)
         else:
-            model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+            #model_optim = optim.Adam(self.model.parameters(), lr=self.args.learning_rate)
+            decay = []
+            no_decay = []
+
+            for name, param in self.model.named_parameters():
+                if 'Linear_CD' in name:
+                    decay.append(param)       # Apply weight decay
+                    print(f"Applying weight decay to {name}")
+                else:
+                    no_decay.append(param)    # No weight decay
+                    print(f"No weight decay for {name}")
+
+            #model_optim = torch.optim.Adam([
+            model_optim = torch.optim.AdamW([
+                {'params': decay, 'weight_decay': self.args.cd_weight_decay},
+                {'params': no_decay, 'weight_decay': 0.0}
+            ], lr=self.args.learning_rate)
+
         return model_optim
 
     def _select_criterion(self):
@@ -79,6 +100,8 @@ class Exp_Main(Exp_Basic):
                     with torch.cuda.amp.autocast():
                         if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                             outputs = self.model(batch_x)
+                        elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                         else:
                             if self.args.output_attention:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -87,6 +110,8 @@ class Exp_Main(Exp_Basic):
                 else:
                     if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                         outputs = self.model(batch_x)
+                    elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                     else:
                         if self.args.output_attention:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -159,6 +184,8 @@ class Exp_Main(Exp_Basic):
                     with torch.cuda.amp.autocast():
                         if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                             outputs = self.model(batch_x)
+                        elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                         else:
                             if self.args.output_attention:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -173,6 +200,8 @@ class Exp_Main(Exp_Basic):
                 else:
                     if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                             outputs = self.model(batch_x)
+                    elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                     else:
                         if self.args.output_attention:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -268,8 +297,11 @@ class Exp_Main(Exp_Basic):
 
         return self.model
 
-    def test(self, setting, test=0):
-        test_data, test_loader = self._get_data(flag='test')
+    #def test(self, setting, test=0):
+    def test(self, setting, test=0, data_flag='test'):
+        test_data, test_loader = self._get_data(flag=data_flag)
+        
+        #test_data, test_loader = self._get_data(flag='test')
         
         if test:
             print('loading model')
@@ -299,6 +331,8 @@ class Exp_Main(Exp_Basic):
                     with torch.cuda.amp.autocast():
                         if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                             outputs = self.model(batch_x)
+                        elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                         else:
                             if self.args.output_attention:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -307,6 +341,8 @@ class Exp_Main(Exp_Basic):
                 else:
                     if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                             outputs = self.model(batch_x)
+                    elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                     else:
                         if self.args.output_attention:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -324,7 +360,7 @@ class Exp_Main(Exp_Basic):
                 pred = outputs  # outputs.detach().cpu().numpy()  # .squeeze()
                 true = batch_y  # batch_y.detach().cpu().numpy()  # .squeeze()
 
-                preds.append(pred)
+                preds.append(pred)  # list of numpy arrays
                 trues.append(true)
                 inputx.append(batch_x.detach().cpu().numpy())
                 if i % 20 == 0:
@@ -350,25 +386,56 @@ class Exp_Main(Exp_Basic):
             os.makedirs(folder_path)
 
         mae, mse, rmse, mape, mspe, rse, corr = metric(preds, trues)
-        print('mse:{}, mae:{}, rse:{}'.format(mse, mae, rse))
-        f = open("result.txt", 'a')
-        f.write(setting + "  \n")
-        f.write('mse:{}, mae:{}, rse:{}'.format(mse, mae, rse))
-        f.write('\n')
-        f.write('\n')
-        f.close()
 
-        # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe,rse, corr]))
-        np.save(folder_path + 'pred.npy', preds)
-        np.save(folder_path + 'true.npy', trues)
-        np.save(folder_path + 'x.npy', inputx)
+        channel_metrics = metric_of_channels(preds, trues)
 
-        # Log to wandb:
-        wandb.log({
-            "mse": mse,
-            "mae": mae,
-            "rse": rse
-        })
+        mse_per_channel_list = [m['mse'] for m in channel_metrics]
+        mae_per_channel_list = [m['mae'] for m in channel_metrics]
+        
+        # Create a table with indices and values
+        mse_per_channel_table = wandb.Table(columns=["channel", "mse"])
+        for i, val in enumerate(mse_per_channel_list):
+            mse_per_channel_table.add_data(i, val)
+
+        mae_per_channel_table = wandb.Table(columns=["channel", "mae"])
+        for i, val in enumerate(mae_per_channel_list):
+            mae_per_channel_table.add_data(i, val)
+
+        if data_flag=='test':
+            print('mse:{}, mae:{}, rse:{}'.format(mse, mae, rse))
+            f = open("result.txt", 'a')
+            f.write(setting + "  \n")
+            f.write('mse:{}, mae:{}, rse:{}'.format(mse, mae, rse))
+            f.write('\n')
+            f.write('\n')
+            f.close()
+
+            # np.save(folder_path + 'metrics.npy', np.array([mae, mse, rmse, mape, mspe,rse, corr]))
+            np.save(folder_path + 'pred.npy', preds)
+            np.save(folder_path + 'true.npy', trues)
+            np.save(folder_path + 'x.npy', inputx)
+
+            # Log to wandb:
+            wandb.log({
+                "mse": mse,
+                "mae": mae,
+                "rse": rse,
+                #"mse_per_channel_table": mse_per_channel_table,
+                "mse_per_channel_list": mse_per_channel_list,
+                #"mae_per_channel_table": mae_per_channel_table,
+                "mae_per_channel_list": mae_per_channel_list,
+            })
+        else:
+            # Log to wandb:
+            wandb.log({
+                "mse_train": mse,
+                "mae_train": mae,
+                "rse_train": rse,
+                #"mse_train_per_channel_table": mse_per_channel_table,
+                "mse_train_per_channel_list": mse_per_channel_list,
+                #"mae_train_per_channel_table": mae_per_channel_table,
+                "mae_train_per_channel_list": mae_per_channel_list,
+            })
 
         return
 
@@ -398,6 +465,8 @@ class Exp_Main(Exp_Basic):
                     with torch.cuda.amp.autocast():
                         if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                             outputs = self.model(batch_x)
+                        elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                         else:
                             if self.args.output_attention:
                                 outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
@@ -406,6 +475,8 @@ class Exp_Main(Exp_Basic):
                 else:
                     if 'Linear' in self.args.model or 'TST' in self.args.model or 'Simon' in self.args.model:
                         outputs = self.model(batch_x)
+                    elif 'TCN' in self.args.model:
+                            outputs = self.model(batch_x, batch_x_mark)
                     else:
                         if self.args.output_attention:
                             outputs = self.model(batch_x, batch_x_mark, dec_inp, batch_y_mark)[0]
