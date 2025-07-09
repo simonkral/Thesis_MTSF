@@ -42,3 +42,30 @@ def metric(pred, true):
     corr = CORR(pred, true)
 
     return mae, mse, rmse, mape, mspe, rse, corr
+
+def metric_of_channels(preds, trues):
+    """
+    Computes MAE, MSE, RSE for each channel.
+    
+    Returns:
+        List of dicts, one per channel.
+    """
+    num_channels = preds.shape[-1]
+    channel_metrics = []
+
+    for c in range(num_channels):
+        pred_c = preds[:, :, c]
+        true_c = trues[:, :, c]
+
+        mae = MAE(pred_c, true_c)
+        mse = MSE(pred_c, true_c)
+        rse = RSE(pred_c, true_c)
+
+        channel_metrics.append({
+            'channel': c,
+            'mae': mae,
+            'mse': mse,
+            'rse': rse,
+        })
+
+    return channel_metrics
