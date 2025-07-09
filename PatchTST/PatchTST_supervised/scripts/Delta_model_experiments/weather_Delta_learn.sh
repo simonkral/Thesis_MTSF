@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=2:00:00
+#SBATCH --time=1:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -22,20 +22,26 @@ fi
 seq_len=336
 model_name=Linear_Delta
 
-for pred_len in 96 720
+for freeze in 2 4 6 8
 do
-    python -u run_longExp.py \
-        --is_training 1 \
-        --root_path ./dataset/ \
-        --data_path weather.csv \
-        --model_id weather_$seq_len'_'$pred_len \
-        --model $model_name \
-        --data custom \
-        --features M \
-        --seq_len $seq_len \
-        --pred_len $pred_len \
-        --learn_cd_regularization True \
-        --enc_in 21 \
-        --des 'Exp' \
-        --itr 1 --batch_size 16 --patience 10 >logs/LongForecasting/$model_name'_'Weather_$seq_len'_'$pred_len'_cd_reg_learn'.log
+    for pred_len in 96 720
+    do
+        python -u run_longExp.py \
+            --is_training 1 \
+            --root_path ./dataset/ \
+            --data_path weather.csv \
+            --model_id weather_$seq_len'_'$pred_len \
+            --model $model_name \
+            --data custom \
+            --features M \
+            --seq_len $seq_len \
+            --pred_len $pred_len \
+            --learn_cd_regularization 1 \
+            --sigmoid 1 \
+            --convex 1 \
+            --lambda_freeze_patience $freeze \
+            --enc_in 21 \
+            --des 'Exp' \
+            --itr 1 --batch_size 16 --patience 10 >logs/LongForecasting/$model_name'_'Weather_$seq_len'_'$pred_len'_cd_reg_learn'.log
+    done
 done

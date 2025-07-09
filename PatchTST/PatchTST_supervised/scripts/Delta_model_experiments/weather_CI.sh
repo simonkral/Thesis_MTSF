@@ -19,26 +19,23 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-#seq_len=336
-seq_len=96
+seq_len=336
+#seq_len=96
 model_name=Linear
 
-for seq_len in 48 192 720
+for pred_len in 96 720
 do
-    for pred_len in 96 720
-    do
-        python -u run_longExp.py \
-        --is_training 1 \
-        --root_path ./dataset/ \
-        --data_path weather.csv \
-        --model_id weather_$seq_len'_'$pred_len \
-        --model $model_name \
-        --data custom \
-        --features M \
-        --seq_len $seq_len \
-        --pred_len $pred_len \
-        --enc_in 21 \
-        --des 'Exp' \
-        --itr 1 --batch_size 16 --patience 10 >logs/LongForecasting/$model_name'_'Weather_$seq_len'_'$pred_len.log 
-    done
+    python -u run_longExp.py \
+    --is_training 1 \
+    --root_path ./dataset/ \
+    --data_path weather.csv \
+    --model_id weather_$seq_len'_'$pred_len \
+    --model $model_name \
+    --data custom \
+    --features M \
+    --seq_len $seq_len \
+    --pred_len $pred_len \
+    --enc_in 21 \
+    --des 'Exp' \
+    --itr 1 --batch_size 16 --patience 10 >logs/LongForecasting/$model_name'_'Weather_$seq_len'_'$pred_len.log 
 done

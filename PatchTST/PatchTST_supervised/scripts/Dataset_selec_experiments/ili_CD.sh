@@ -39,7 +39,7 @@ do
             --seq_len $seq_len \
             --label_len 18 \
             --pred_len $pred_len \
-            --enc_in 7 \
+            --enc_in 2 \
             --des 'Exp' \
             --itr 1 --batch_size 32 --patience 10 --learning_rate 0.01 >logs/LongForecasting/$model_name'_'ili_$seq_len'_'$pred_len.log
     done

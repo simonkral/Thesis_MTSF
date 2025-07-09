@@ -19,10 +19,11 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-seq_len=336
-model_name=Linear_Delta
 
-for freeze in 0 2 4 6 8
+seq_len=336
+model_name=Linear_Delta_reg
+
+for cd_weight_decay in 0 1e-6 1e-5 1e-4 1e-3 1e-2
 do
     for pred_len in 96 720
     do
@@ -36,12 +37,9 @@ do
             --features M \
             --seq_len $seq_len \
             --pred_len $pred_len \
-            --learn_cd_regularization 1 \
-            --sigmoid 1 \
-            --convex 1 \
-            --lambda_freeze_patience $freeze \
+            --cd_weight_decay $cd_weight_decay \
             --enc_in 7 \
             --des 'Exp' \
-            --itr 1 --batch_size 32 --patience 10 --learning_rate 0.005 >logs/LongForecasting/$model_name'_'Etth1_$seq_len'_'$pred_len'_cd_reg_learn'.log
+            --itr 1 --batch_size 32 --patience 10 --learning_rate 0.005 >logs/LongForecasting/$model_name'_'Etth1_$seq_len'_'$pred_len'_cd_wdecay'.log
     done
 done

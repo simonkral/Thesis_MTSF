@@ -107,6 +107,8 @@ temp/
 PatchTST/PatchTST_supervised/results/
 PatchTST/PatchTST_supervised/test_results/
 
+visualization/plots/
+
 *.pdf
 *.pth
 *.json
