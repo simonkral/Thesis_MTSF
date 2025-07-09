@@ -42,11 +42,14 @@ class Model(nn.Module):
         affine = configs.affine
         subtract_last = configs.subtract_last
         
-        decomposition = configs.decomposition
+        decomposition = configs.decomposition       # default arg.: = 0, i.e. False
         kernel_size = configs.kernel_size
         
         
         # model
+        self.channel_handling = configs.channel_handling
+        self.target_window = target_window
+
         self.decomposition = decomposition
         if self.decomposition:
             self.decomp_module = series_decomp(kernel_size)
@@ -67,7 +70,26 @@ class Model(nn.Module):
                                   pretrain_head=pretrain_head, head_type=head_type, individual=individual, revin=revin, affine=affine,
                                   subtract_last=subtract_last, verbose=verbose, **kwargs)
         else:
-            self.model = PatchTST_backbone(c_in=c_in, context_window = context_window, target_window=target_window, patch_len=patch_len, stride=stride, 
+            if self.channel_handling == "CI_loc":
+                self.models = nn.ModuleList()
+                for i in range(c_in):
+                    self.models.append(
+                        PatchTST_backbone(
+                            c_in=1,  # univariate input for each channel
+                            context_window=context_window,
+                            target_window=target_window,
+                            patch_len=patch_len, stride=stride,
+                            max_seq_len=max_seq_len, n_layers=n_layers, d_model=d_model,
+                            n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm, attn_dropout=attn_dropout,
+                            dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var,
+                            attn_mask=attn_mask, res_attention=res_attention, pre_norm=pre_norm, store_attn=store_attn,
+                            pe=pe, learn_pe=learn_pe, fc_dropout=fc_dropout, head_dropout=head_dropout, padding_patch=padding_patch,
+                            pretrain_head=pretrain_head, head_type=head_type, individual=individual, revin=revin, affine=affine,
+                            subtract_last=subtract_last, verbose=verbose, **kwargs
+                        )
+                    )
+            elif self.channel_handling == "CI_glob":
+                self.model = PatchTST_backbone(c_in=c_in, context_window = context_window, target_window=target_window, patch_len=patch_len, stride=stride, 
                                   max_seq_len=max_seq_len, n_layers=n_layers, d_model=d_model,
                                   n_heads=n_heads, d_k=d_k, d_v=d_v, d_ff=d_ff, norm=norm, attn_dropout=attn_dropout,
                                   dropout=dropout, act=act, key_padding_mask=key_padding_mask, padding_var=padding_var, 
@@ -75,7 +97,6 @@ class Model(nn.Module):
                                   pe=pe, learn_pe=learn_pe, fc_dropout=fc_dropout, head_dropout=head_dropout, padding_patch = padding_patch,
                                   pretrain_head=pretrain_head, head_type=head_type, individual=individual, revin=revin, affine=affine,
                                   subtract_last=subtract_last, verbose=verbose, **kwargs)
-    
     
     def forward(self, x):           # x: [Batch, Input length, Channel]
         if self.decomposition:
@@ -86,7 +107,17 @@ class Model(nn.Module):
             x = res + trend
             x = x.permute(0,2,1)    # x: [Batch, Input length, Channel]
         else:
-            x = x.permute(0,2,1)    # x: [Batch, Channel, Input length]
-            x = self.model(x)
-            x = x.permute(0,2,1)    # x: [Batch, Input length, Channel]
+            if self.channel_handling == "CI_loc":
+                out = torch.zeros(x.size(0), self.target_window, x.size(2), dtype=x.dtype, device=x.device)
+                for i in range(x.size(2)):  # over channels
+                    # pick one channel, shape [Batch, Input length]
+                    xi = x[:, :, i].unsqueeze(2).permute(0,2,1)  # to [Batch, 1, Input length]
+                    yi = self.models[i](xi)
+                    yi = yi.permute(0,2,1)  # back to [Batch, Output length, 1]
+                    out[:,:,i] = yi.squeeze(2)
+                return out
+            elif self.channel_handling == "CI_glob":
+                x = x.permute(0,2,1)    # x: [Batch, Channel, Input length]
+                x = self.model(x)
+                x = x.permute(0,2,1)    # x: [Batch, Input length, Channel]
         return x
