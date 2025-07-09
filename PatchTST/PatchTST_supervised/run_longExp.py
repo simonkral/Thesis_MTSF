@@ -34,7 +34,7 @@ if __name__ == '__main__':
     parser.add_argument('--label_len', type=int, default=48, help='start token length')
     parser.add_argument('--pred_len', type=int, default=96, help='prediction sequence length')
 
-    # Delta model - Simon
+    # Delta model - Simon (v1)
     parser.add_argument('--cd_regularization', type=float, default=0.0,
                         help='Fixed CD regularization coefficient, 0.0: Final model = CI, 1.0: Final model = CI + CD, 0.5: Final model = CI + 0.5 * CD')
     parser.add_argument('--learn_cd_regularization', type=int, default=0, 
@@ -42,10 +42,37 @@ if __name__ == '__main__':
     parser.add_argument('--sigmoid', type=int, default=0, help='CD regularization coefficient is sigmoid functon')
     parser.add_argument('--convex', type=int, default=1, help='CI + CD convex combination, 1: convex, 0: non-convex')
     parser.add_argument('--lambda_freeze_patience', type=int, default=0, help='freezing patience for lambda, 0: no freezing, >0: patience for freezing lambda')
-                        
+
+    # Delta model - Simon (v2 - CD weight decay)
+    parser.add_argument('--cd_weight_decay', type=float, default=0.0, help='Weight decay for CD term')
+    parser.add_argument('--channel_handling', type=str, default="CI_glob", 
+                        help='specifies how channels are handled, options:[CI_glob, CI_loc, CD, Delta]')
+    parser.add_argument('--optimizer', type=str, default="AdamW")#, help='Weight decay for CD term')
+    
+    """
     # DWSC - Simon
     parser.add_argument('--conv_kernel_size', type=int, default=5, help='convolution kernel size')
     parser.add_argument('--n_blocks', type=int, default=1, help='number of blocks')
+    """
+
+    # ModernTCN
+    parser.add_argument('--stem_ratio', type=int, default=6, help='stem ratio')
+    parser.add_argument('--downsample_ratio', type=int, default=2, help='downsample_ratio')
+    parser.add_argument('--ffn_ratio', type=int, default=2, help='ffn_ratio')
+    parser.add_argument('--patch_size', type=int, default=16, help='the patch size')
+    parser.add_argument('--patch_stride', type=int, default=8, help='the patch stride')
+
+    parser.add_argument('--num_blocks', nargs='+',type=int, default=[1,1,1,1], help='num_blocks in each stage')
+    parser.add_argument('--large_size', nargs='+',type=int, default=[31,29,27,13], help='big kernel size')
+    parser.add_argument('--small_size', nargs='+',type=int, default=[5,5,5,5], help='small kernel size for structral reparam')
+    parser.add_argument('--dims', nargs='+',type=int, default=[256,256,256,256], help='dmodels in each stage')
+    parser.add_argument('--dw_dims', nargs='+',type=int, default=[256,256,256,256])
+
+    #parser.add_argument('--small_kernel_merged', type=str2bool, default=False, help='small_kernel has already merged or not')
+    parser.add_argument('--small_kernel_merged', type=int, default=0, help='small_kernel has already merged or not')
+    parser.add_argument('--call_structural_reparam', type=bool, default=False, help='structural_reparam after training')
+    parser.add_argument('--use_multi_scale', type=int, default=1, help='use_multi_scale fusion')
+    #parser.add_argument('--use_multi_scale', type=str2bool, default=True, help='use_multi_scale fusion')
 
     # DLinear
     #parser.add_argument('--individual', action='store_true', default=False, help='DLinear: a linear layer for each variate(channel) individually')
@@ -161,6 +188,9 @@ if __name__ == '__main__':
 
             print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
             exp.test(setting)
+
+            print('>>>>>>>testing on training data: {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
+            exp.test(setting, data_flag='train')
 
             if args.do_predict:
                 print('>>>>>>>predicting : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
