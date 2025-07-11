@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=ModernTCN_ETTh2
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_ETTh2.out
+#SBATCH --job-name=ModernTCN_exchange
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_exchange.out
 
 module load devel/cuda/11.8
 
@@ -23,20 +23,21 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for pred_len in 192 336 720
+for pred_len in 96 192 336 720
 do
     for channel_handling in CI_loc CI_glob CD Delta
     do
         python -u run_longExp.py \
             --is_training 1 \
-            --model_id ETTh2_$seq_len'_'$pred_len \
+            --model_id exchange_$seq_len'_'$pred_len \
             --model $model_name \
             --root_path ./dataset/ \
-            --data_path ETTh2.csv \
-            --data ETTh2 \
+            --data_path exchange_rate.csv \
+            --data custom \
             --features M \
             --seq_len $seq_len \
             --pred_len $pred_len \
+            --label_len 0 \
             --ffn_ratio 1 \
             --patch_size 8 \
             --patch_stride 4 \
@@ -44,18 +45,18 @@ do
             --large_size 51 \
             --small_size 5 \
             --dims 64 64 64 64 \
-            --head_dropout 0.0 \
-            --enc_in 7 \
-            --dropout 0.3 \
+            --head_dropout 0.6 \
+            --enc_in 8 \
+            --dropout 0.2 \
             --itr 1 \
             --train_epochs 100 \
             --batch_size 512 \
             --patience 20 \
             --learning_rate 0.0001 \
             --des Exp \
-            --lradj type3 \
             --use_multi_scale 0 \
+            --small_kernel_merged 0 \
             --channel_handling $channel_handling \
-            --small_kernel_merged 0 >logs/LongForecasting/$model_name'_'Etth2_$seq_len'_'$pred_len.log
+            >logs/LongForecasting/$model_name'_'exchange_$seq_len'_'$pred_len.log
     done
 done

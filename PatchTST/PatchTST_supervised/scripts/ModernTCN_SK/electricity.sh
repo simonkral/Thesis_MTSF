@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=ModernTCN_ETTh2
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_ETTh2.out
+#SBATCH --job-name=ModernTCN_electricity
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_electricity.out
 
 module load devel/cuda/11.8
 
@@ -23,21 +23,21 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for pred_len in 192 336 720
+for pred_len in 96 192 336 720
 do
     for channel_handling in CI_loc CI_glob CD Delta
     do
         python -u run_longExp.py \
             --is_training 1 \
-            --model_id ETTh2_$seq_len'_'$pred_len \
+            --model_id electricity_$seq_len'_'$pred_len \
             --model $model_name \
             --root_path ./dataset/ \
-            --data_path ETTh2.csv \
-            --data ETTh2 \
+            --data_path electricity.csv \
+            --data custom \
             --features M \
             --seq_len $seq_len \
             --pred_len $pred_len \
-            --ffn_ratio 1 \
+            --ffn_ratio 8 \
             --patch_size 8 \
             --patch_stride 4 \
             --num_blocks 1 \
@@ -45,17 +45,17 @@ do
             --small_size 5 \
             --dims 64 64 64 64 \
             --head_dropout 0.0 \
-            --enc_in 7 \
-            --dropout 0.3 \
+            --enc_in 321 \
+            --dropout 0.9 \
             --itr 1 \
             --train_epochs 100 \
-            --batch_size 512 \
-            --patience 20 \
+            --batch_size 32 \
+            --patience 10 \
             --learning_rate 0.0001 \
             --des Exp \
-            --lradj type3 \
             --use_multi_scale 0 \
+            --small_kernel_merged 0 \
             --channel_handling $channel_handling \
-            --small_kernel_merged 0 >logs/LongForecasting/$model_name'_'Etth2_$seq_len'_'$pred_len.log
+            >logs/LongForecasting/$model_name'_'electricity_$seq_len'_'$pred_len.log
     done
 done
