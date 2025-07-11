@@ -405,14 +405,15 @@ class Model(nn.Module):
                     subtract_last=self.subtract_last, freq=self.freq, seq_len=self.seq_len, c_in=1, individual=self.individual, target_window=self.target_window)
                      for _ in range(self.nvars)
                 ])
-            else:
+            elif self.channel_handling == "CI_glob" or self.channel_handling == "Delta":
                 self.model_CI = ModernTCN(patch_size=self.patch_size,patch_stride=self.patch_stride,stem_ratio=self.stem_ratio, downsample_ratio=self.downsample_ratio, ffn_ratio=self.ffn_ratio, num_blocks=self.num_blocks, large_size=self.large_size, small_size=self.small_size, dims=self.dims, dw_dims=self.dw_dims,
                     nvars=1, small_kernel_merged=self.small_kernel_merged, backbone_dropout=self.drop_backbone, head_dropout=self.drop_head, use_multi_scale=self.use_multi_scale, revin=self.revin, affine=self.affine,
                     subtract_last=self.subtract_last, freq=self.freq, seq_len=self.seq_len, c_in=1, individual=self.individual, target_window=self.target_window)
-               
-            self.model_CD = ModernTCN(patch_size=self.patch_size,patch_stride=self.patch_stride,stem_ratio=self.stem_ratio, downsample_ratio=self.downsample_ratio, ffn_ratio=self.ffn_ratio, num_blocks=self.num_blocks, large_size=self.large_size, small_size=self.small_size, dims=self.dims, dw_dims=self.dw_dims,
-                nvars=self.nvars, small_kernel_merged=self.small_kernel_merged, backbone_dropout=self.drop_backbone, head_dropout=self.drop_head, use_multi_scale=self.use_multi_scale, revin=self.revin, affine=self.affine,
-                subtract_last=self.subtract_last, freq=self.freq, seq_len=self.seq_len, c_in=self.c_in, individual=self.individual, target_window=self.target_window)
+            
+            if self.channel_handling == "CD" or self.channel_handling == "Delta":
+                self.model_CD = ModernTCN(patch_size=self.patch_size,patch_stride=self.patch_stride,stem_ratio=self.stem_ratio, downsample_ratio=self.downsample_ratio, ffn_ratio=self.ffn_ratio, num_blocks=self.num_blocks, large_size=self.large_size, small_size=self.small_size, dims=self.dims, dw_dims=self.dw_dims,
+                    nvars=self.nvars, small_kernel_merged=self.small_kernel_merged, backbone_dropout=self.drop_backbone, head_dropout=self.drop_head, use_multi_scale=self.use_multi_scale, revin=self.revin, affine=self.affine,
+                    subtract_last=self.subtract_last, freq=self.freq, seq_len=self.seq_len, c_in=self.c_in, individual=self.individual, target_window=self.target_window)
 
     def forward(self, x, te=None):  # x: [Batch, Input length, Channel]?
 
@@ -426,12 +427,11 @@ class Model(nn.Module):
             x = res + trend
             out = x.permute(0, 2, 1)
         else:
-            ### CI component
+            x = x.permute(0, 2, 1)
+            if te is not None:
+                te = te.permute(0, 2, 1)
+            
             if self.channel_handling == "CI_loc":
-                x = x.permute(0, 2, 1)
-                if te is not None:
-                    te = te.permute(0, 2, 1)
-
                 outputs = []
                 for c in range(x.shape[1]):  # x.shape[1] == C
                     x_c = x[:, c:c+1, :]     # (B, 1, L)
@@ -439,12 +439,8 @@ class Model(nn.Module):
                     outputs.append(out_c)
 
                 x = torch.cat(outputs, dim=1)    # (B, C, L_out)
-                out_CI = x.permute(0, 2, 1)  # (B, L_out, C)
-            else:
-                x = x.permute(0, 2, 1)
-                if te is not None:
-                    te = te.permute(0, 2, 1)
-
+                out = x.permute(0, 2, 1)  # (B, L_out, C)
+            elif self.channel_handling == "CI_glob":
                 outputs = []
                 for c in range(x.shape[1]):  # x.shape[1] == C
                     x_c = x[:, c:c+1, :]     # (B, 1, L)
@@ -452,21 +448,19 @@ class Model(nn.Module):
                     outputs.append(out_c)
 
                 x = torch.cat(outputs, dim=1)    # (B, C, L_out)
-                out_CI = x.permute(0, 2, 1)  # (B, L_out, C)
-
-            ### CD component
-            x = x.permute(0, 2, 1)
-            if te is not None:
-                te = te.permute(0, 2, 1)
-            x = self.model_CD(x, te)
-            out_CD = x.permute(0, 2, 1)
-
-            # final output
-            if self.channel_handling == "CI_glob" or self.channel_handling == "CI_loc":
-                out = out_CI
+                out = x.permute(0, 2, 1)  # (B, L_out, C)
             elif self.channel_handling == "CD":
-                out = out_CD
+                x = self.model_CD(x, te)
+                out = x.permute(0, 2, 1)
+
             elif self.channel_handling == "Delta":
-                out = out_CI + out_CD
-        
+                outputs = []
+                for c in range(x.shape[1]):  # x.shape[1] == C
+                    x_c = x[:, c:c+1, :]     # (B, 1, L)
+                    out_c = self.model_CI(x_c, te)  # assuming model expects (B, C_in=1, L)
+                    outputs.append(out_c)
+
+                x = torch.cat(outputs, dim=1) + self.model_CD(x, te)  # CI glob + CD
+                out = x.permute(0, 2, 1)  # (B, L_out, C)
+
         return out
