@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=PatchTST_ETTm2
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_ETTm2.out
+#SBATCH --job-name=PatchTST_ETTm1
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_ETTm1.out
 
 module load devel/cuda/11.8
 
@@ -22,9 +22,9 @@ seq_len=336
 model_name=PatchTST
 
 root_path_name=./dataset/
-data_path_name=ETTm2.csv
-model_id_name=ETTm2
-data_name=ETTm2
+data_path_name=ETTm1.csv
+model_id_name=ETTm1
+data_name=ETTm1
 
 random_seed=2021
 
@@ -57,7 +57,7 @@ do
         --train_epochs 100\
         --patience 20\
         --lradj 'TST'\
-        --pct_start 0.4 \
+        --pct_start 0.4\
         --channel_handling $channel_handling \
         --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
     done

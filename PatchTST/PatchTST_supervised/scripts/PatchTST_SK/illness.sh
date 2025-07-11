@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=3:00:00
+#SBATCH --time=0:10:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=PatchTST_weather
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_weather.out
+#SBATCH --job-name=PatchTST_national_illness
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_national_illness.out
 
 module load devel/cuda/11.8
 
@@ -18,17 +18,18 @@ fi
 if [ ! -d "./logs/LongForecasting" ]; then
     mkdir ./logs/LongForecasting
 fi
-seq_len=336
+
+seq_len=104
 model_name=PatchTST
 
 root_path_name=./dataset/
-data_path_name=weather.csv
-model_id_name=weather
+data_path_name=national_illness.csv
+model_id_name=national_illness
 data_name=custom
 
 random_seed=2021
 
-for pred_len in 96 192 336 720
+for pred_len in 24 36 48 60
 do
     for channel_handling in CI_loc CI_glob
     do
@@ -43,20 +44,21 @@ do
             --features M \
             --seq_len $seq_len \
             --pred_len $pred_len \
-            --enc_in 21 \
+            --enc_in 7 \
             --e_layers 3 \
-            --n_heads 16 \
-            --d_model 128 \
-            --d_ff 256 \
-            --dropout 0.2\
-            --fc_dropout 0.2\
+            --n_heads 4 \
+            --d_model 16 \
+            --d_ff 128 \
+            --dropout 0.3\
+            --fc_dropout 0.3\
             --head_dropout 0\
-            --patch_len 16\
-            --stride 8\
+            --patch_len 24\
+            --stride 2\
             --des 'Exp' \
             --train_epochs 100\
             --patience 20\
+            --lradj 'constant'\
             --channel_handling $channel_handling \
-            --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 16 --learning_rate 0.0025 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
     done
 done
