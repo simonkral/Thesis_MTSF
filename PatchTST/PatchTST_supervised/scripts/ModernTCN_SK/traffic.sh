@@ -23,39 +23,44 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for pred_len in 96 192 336 720
+for random_seed in 2021
+#for random_seed in 2021 2022 2023 2024 2025
 do
-    for channel_handling in CI_loc CI_glob CD Delta
+    for pred_len in 96 192 336 720
     do
-        python -u run_longExp.py \
-            --is_training 1 \
-            --model_id Traffic_$seq_len'_'$pred_len \
-            --model $model_name \
-            --root_path ./dataset/ \
-            --data_path traffic.csv \
-            --data custom \
-            --features M \
-            --seq_len $seq_len \
-            --pred_len $pred_len \
-            --ffn_ratio 8 \
-            --patch_size 8 \
-            --patch_stride 4 \
-            --num_blocks 1 \
-            --large_size 51 \
-            --small_size 5 \
-            --dims 64 64 64 64 \
-            --head_dropout 0.0 \
-            --enc_in 862 \
-            --dropout 0.9 \
-            --itr 1 \
-            --train_epochs 100 \
-            --batch_size 32 \
-            --patience 10 \
-            --learning_rate 0.00005 \
-            --des Exp \
-            --use_multi_scale 0 \
-            --small_kernel_merged 0 \
-            --channel_handling $channel_handling \
-            >logs/LongForecasting/$model_name'_'traffic_$seq_len'_'$pred_len.log
+        for channel_handling in CI_loc CI_glob CD Delta
+        do
+            python -u run_longExp.py \
+                --random_seed $random_seed \
+                --is_training 1 \
+                --model_id Traffic_$seq_len'_'$pred_len \
+                --model $model_name \
+                --root_path ./dataset/ \
+                --data_path traffic.csv \
+                --data custom \
+                --features M \
+                --seq_len $seq_len \
+                --pred_len $pred_len \
+                --ffn_ratio 8 \
+                --patch_size 8 \
+                --patch_stride 4 \
+                --num_blocks 1 \
+                --large_size 51 \
+                --small_size 5 \
+                --dims 64 64 64 64 \
+                --head_dropout 0.0 \
+                --enc_in 862 \
+                --dropout 0.9 \
+                --itr 1 \
+                --train_epochs 100 \
+                --batch_size 32 \
+                --patience 10 \
+                --learning_rate 0.00005 \
+                --des Exp \
+                --use_multi_scale 0 \
+                --small_kernel_merged 0 \
+                --channel_handling $channel_handling \
+                >logs/LongForecasting/$model_name'_'traffic_$seq_len'_'$pred_len.log
+        done
     done
 done
