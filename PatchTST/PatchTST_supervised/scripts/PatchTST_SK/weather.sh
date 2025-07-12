@@ -9,6 +9,8 @@
 #SBATCH --job-name=PatchTST_weather
 #SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_weather.out
 
+source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
+conda activate PatchTST
 module load devel/cuda/11.8
 
 if [ ! -d "./logs" ]; then

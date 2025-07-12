@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0:10:00
+#SBATCH --time=1:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -9,6 +9,8 @@
 #SBATCH --job-name=PatchTST_ETTh2
 #SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_ETTh2.out
 
+source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
+conda activate PatchTST
 module load devel/cuda/11.8
 
 if [ ! -d "./logs" ]; then

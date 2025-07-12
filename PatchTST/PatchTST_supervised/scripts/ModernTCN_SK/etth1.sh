@@ -9,6 +9,8 @@
 #SBATCH --job-name=ModernTCN_ETTh1
 #SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_ETTh1.out
 
+source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
+conda activate PatchTST
 module load devel/cuda/11.8
 
 # add --individual for DLinear-I

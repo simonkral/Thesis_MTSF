@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=0:10:00
+#SBATCH --time=0:45:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -9,6 +9,8 @@
 #SBATCH --job-name=PatchTST_ETTh1
 #SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_ETTh1.out
 
+source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
+conda activate PatchTST
 module load devel/cuda/11.8
 
 if [ ! -d "./logs" ]; then
@@ -30,7 +32,7 @@ data_name=ETTh1
 for random_seed in 2021
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 96 192 336 720
+    for pred_len in 192 336 720
     do
         for channel_handling in CI_loc CI_glob
         do
