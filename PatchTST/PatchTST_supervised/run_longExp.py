@@ -164,7 +164,7 @@ if __name__ == '__main__':
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(
+            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_rs{}_ch{}_cdwd{}_{}_{}'.format(
                 args.model_id,
                 args.model,
                 args.data,
@@ -180,6 +180,9 @@ if __name__ == '__main__':
                 args.factor,
                 args.embed,
                 args.distil,
+                args.random_seed,   # added random seed to setting
+                args.channel_handling,  # added channel handling to setting
+                args.cd_weight_decay,  # added CD weight decay to setting
                 args.des,
                 ii
             )
@@ -201,7 +204,7 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
     else:
         ii = 0
-        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_{}_{}'.format(
+        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_rs{}_ch{}_cdwd{}_{}_{}'.format(
             args.model_id,
             args.model,
             args.data,
@@ -217,6 +220,9 @@ if __name__ == '__main__':
             args.factor,
             args.embed,
             args.distil,
+            args.random_seed,   # added random seed to setting
+            args.channel_handling,  # added channel handling to setting
+            args.cd_weight_decay,  # added CD weight decay to setting
             args.des, 
             ii
         )
