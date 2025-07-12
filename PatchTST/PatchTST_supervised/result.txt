@@ -1699,3 +1699,66 @@ mse:0.9857539534568787, mae:0.7546936869621277, rse:0.9444335103034973
 ETTm2_336_336_ModernTCN_ETTm2_ftM_sl336_ll48_pl336_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_Exp_0  
 mse:3.0562632083892822, mae:1.3441588878631592, rse:1.398284912109375
 
+336_96_PatchTST_ETTh1_ftM_sl336_ll48_pl96_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.3828844726085663, mae:0.40642109513282776, rse:0.5867449045181274
+
+336_96_PatchTST_ETTh1_ftM_sl336_ll48_pl96_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:0.38149821758270264, mae:0.40500128269195557, rse:0.5856817364692688
+
+336_96_PatchTST_ETTh2_ftM_sl336_ll48_pl96_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.30246150493621826, mae:0.3560442328453064, rse:0.4393446147441864
+
+336_192_PatchTST_ETTh1_ftM_sl336_ll48_pl192_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.42425453662872314, mae:0.43136265873908997, rse:0.6185359358787537
+
+104_24_PatchTST_custom_ftM_sl104_ll48_pl24_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:1.5269702672958374, mae:0.803708553314209, rse:0.5963308215141296
+
+336_96_PatchTST_ETTh2_ftM_sl336_ll48_pl96_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:0.27430447936058044, mae:0.33621811866760254, rse:0.4183952212333679
+
+104_24_PatchTST_custom_ftM_sl104_ll48_pl24_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:1.30096435546875, mae:0.7343999743461609, rse:0.5504332184791565
+
+336_192_PatchTST_ETTh1_ftM_sl336_ll48_pl192_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:0.41373878717422485, mae:0.42118680477142334, rse:0.6108222603797913
+
+336_192_PatchTST_ETTh2_ftM_sl336_ll48_pl192_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.3643569350242615, mae:0.40385702252388, rse:0.48402196168899536
+
+104_36_PatchTST_custom_ftM_sl104_ll48_pl36_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:1.4024455547332764, mae:0.7383039593696594, rse:0.5679747462272644
+
+104_36_PatchTST_custom_ftM_sl104_ll48_pl36_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:1.6583482027053833, mae:0.897628128528595, rse:0.6176235675811768
+
+336_192_PatchTST_ETTh2_ftM_sl336_ll48_pl192_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:0.33884698152542114, mae:0.37991398572921753, rse:0.4667704403400421
+
+336_336_PatchTST_ETTh1_ftM_sl336_ll48_pl336_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.4446292817592621, mae:0.4505465030670166, rse:0.6374198198318481
+
+336_96_PatchTST_ETTm1_ftM_sl336_ll48_pl96_dm128_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.296282023191452, mae:0.3453123867511749, rse:0.5177738070487976
+
+336_336_PatchTST_ETTh2_ftM_sl336_ll48_pl336_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.3488370478153229, mae:0.4052470326423645, rse:0.47184428572654724
+
+104_48_PatchTST_custom_ftM_sl104_ll48_pl48_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:1.5514458417892456, mae:0.7812935709953308, rse:0.5958299040794373
+
+336_96_PatchTST_ETTm2_ftM_sl336_ll48_pl96_dm128_nh16_el3_dl1_df256_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.16335821151733398, mae:0.2513810098171234, rse:0.32742828130722046
+
+336_96_PatchTST_custom_ftM_sl336_ll48_pl96_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_loc_cdwd0.0_Exp_0  
+mse:0.09993865340948105, mae:0.2224939912557602, rse:0.24077627062797546
+
+336_336_PatchTST_ETTh1_ftM_sl336_ll48_pl336_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:0.4310843050479889, mae:0.43545207381248474, rse:0.627635657787323
+
+104_48_PatchTST_custom_ftM_sl104_ll48_pl48_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:1.6573781967163086, mae:0.879370927810669, rse:0.6158355474472046
+
+336_96_PatchTST_custom_ftM_sl336_ll48_pl96_dm16_nh4_el3_dl1_df128_fc1_ebtimeF_dtTrue_rs2021_chCI_glob_cdwd0.0_Exp_0  
+mse:0.09279216825962067, mae:0.21329909563064575, rse:0.23200781643390656
+
