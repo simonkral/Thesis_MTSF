@@ -31,7 +31,7 @@ do
         --is_training 1 \
         --root_path ./dataset/ \
         --data_path _weather_shower_lag_$data_lag.csv \
-        --target T_degC \
+        --target T_degC_LAG \
         --model_id _weather_shower_lag_$data_lag'_'$seq_len'_'$pred_len \
         --model $model_name \
         --data custom \

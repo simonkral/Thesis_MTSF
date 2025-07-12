@@ -31,7 +31,7 @@ do
             --is_training 1 \
             --root_path ./dataset/ \
             --data_path _national_illness_shower_lag_$data_lag.csv \
-            --target %_WEIGHTED_ILI \
+            --target %_WEIGHTED_ILI_LAG \
             --model_id national_illness_shower_lag_$data_lag_$seq_len'_'$pred_len \
             --model $model_name \
             --data custom \
