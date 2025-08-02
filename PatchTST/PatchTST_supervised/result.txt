@@ -15238,3 +15238,12 @@ mse:1.081972360610962, mae:0.7957568764686584, rse:0.9877790212631226
 ETTh1_336_336_Linear_final_ETTh1_ftM_sl336_ll48_pl336_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_rs2021_chDelta_cdwd0.001_df1.0_p20_sk1_Exp_0  
 mse:1.3789899349212646, mae:0.9101364612579346, rse:1.1181666851043701
 
+ETTh1_336_720_Linear_final_ETTh1_ftM_sl336_ll48_pl720_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_rs2021_chDelta_cdwd0.001_df1.0_p20_sk1_Exp_0  
+mse:1.6211811304092407, mae:1.001521348953247, rse:1.2195311784744263
+
+ETTh1_336_96_Linear_final_ETTh1_ftM_sl336_ll48_pl96_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_rs2021_chDelta_cdwd0.01_df1.0_p20_sk1_Exp_0  
+mse:0.7903997302055359, mae:0.6629477739334106, rse:0.8444562554359436
+
+ETTh1_336_192_Linear_final_ETTh1_ftM_sl336_ll48_pl192_dm512_nh8_el2_dl1_df2048_fc1_ebtimeF_dtTrue_rs2021_chDelta_cdwd0.01_df1.0_p20_sk1_Exp_0  
+mse:1.0798423290252686, mae:0.7949380874633789, rse:0.9868062734603882
+
