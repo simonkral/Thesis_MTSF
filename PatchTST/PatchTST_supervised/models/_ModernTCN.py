@@ -386,6 +386,7 @@ class Model(nn.Module):
         self.patch_stride = configs.patch_stride
 
         self.channel_handling = configs.channel_handling
+        self.delta_factor = configs.delta_factor
 
         # decomp
         self.decomposition = configs.decomposition
@@ -461,6 +462,7 @@ class Model(nn.Module):
                     outputs.append(out_c)
 
                 x = torch.cat(outputs, dim=1) + self.model_CD(x, te)  # CI glob + CD
+                x = x * self.delta_factor
                 out = x.permute(0, 2, 1)  # (B, L_out, C)
 
         return out
