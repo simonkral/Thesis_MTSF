@@ -25,12 +25,13 @@ fi
 seq_len=104
 model_name=ModernTCN
 
-for random_seed in 2021
-#for random_seed in 2021 2022 2023 2024 2025
+#for random_seed in 2021
+for random_seed in 2021 2022 2023 2024 2025
 do
     for pred_len in 24 36 48 60
     do
-        for channel_handling in CI_loc CI_glob CD Delta
+        #for channel_handling in CI_loc CI_glob CD Delta
+        for channel_handling in Delta
         do
             python -u run_longExp.py \
                 --random_seed $random_seed \
@@ -64,6 +65,7 @@ do
                 --use_multi_scale 0 \
                 --small_kernel_merged 0 \
                 --channel_handling $channel_handling \
+                --delta_factor 0.5 \
                 >logs/LongForecasting/$model_name'_'exchange_$seq_len'_'$pred_len.log
         done
     done

@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=4:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=ModernTCN_electricity
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_electricity.out
+#SBATCH --job-name=ModernTCN_electricity_D2
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_electricity_D2.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -25,13 +25,13 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for random_seed in 2022
+for random_seed in 2021
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 720
-    #for pred_len in 336
+    #for pred_len in 96 192 336 720
+    for pred_len in 96 192
     do
-        for channel_handling in CD
+        for channel_handling in Delta
         #for channel_handling in CI_glob CD Delta
         #for channel_handling in CI_loc CI_glob CD Delta
         do
@@ -65,7 +65,8 @@ do
                 --use_multi_scale 0 \
                 --small_kernel_merged 0 \
                 --channel_handling $channel_handling \
-                >logs/LongForecasting/$model_name'_'electricity_$seq_len'_'$pred_len.log
+                --delta_factor 0.5 \
+                >logs/LongForecasting/$model_name'_'electricityD2_$seq_len'_'$pred_len.log
         done
     done
 done

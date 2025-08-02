@@ -30,33 +30,6 @@ learning_rate=0.005
 
 
 for random_seed in 2021
-#for random_seed in 2022 2023 2024 2025
-do
-    ### CI local and global ### 
-    for channel_handling in CI_loc CI_glob
-    do
-        #for pred_len in 24
-        for pred_len in 24 36 48 60
-        do
-            python -u run_longExp.py \
-                --random_seed $random_seed \
-                --is_training 1 \
-                --root_path ./dataset/ \
-                --data_path national_illness.csv \
-                --model_id national_illness_$seq_len'_'$pred_len \
-                --model $model_name \
-                --data custom \
-                --features M \
-                --seq_len $seq_len \
-                --label_len 18 \
-                --pred_len $pred_len \
-                --channel_handling $channel_handling \
-                --enc_in 7 \
-                --des 'Exp' \
-                --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
-                >logs/LongForecasting/$model_name'_'ili_$seq_len'_'$pred_len.log
-        done
-    done
 
     ### CD and Delta for different cd_weight_decay ### 
     for channel_handling in CD Delta
@@ -83,6 +56,7 @@ do
                     --channel_handling $channel_handling \
                     --enc_in 7 \
                     --des 'Exp' \
+                    --skip_1st_epoch 1 \
                     --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
                     >logs/LongForecasting/$model_name'_'ili_$seq_len'_'$pred_len.log
             done

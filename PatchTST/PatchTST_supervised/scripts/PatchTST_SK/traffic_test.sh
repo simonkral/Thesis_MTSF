@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=8:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=PatchTST_ETTm1
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_ETTm1.out
+#SBATCH --job-name=PatchTST_traffic
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_traffic.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -24,21 +24,23 @@ seq_len=336
 model_name=PatchTST
 
 root_path_name=./dataset/
-data_path_name=ETTm1.csv
-model_id_name=ETTm1
-data_name=ETTm1
+data_path_name=traffic.csv
+model_id_name=traffic
+data_name=custom
 
-
-#for random_seed in 2021
-for random_seed in 2022 2023 2024 2025
+for random_seed in 2021
+#for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 96 192 336 720
+    #for pred_len in 96 192 336 720
+    for pred_len in 192 336 720
     do
-        for channel_handling in CI_loc CI_glob
+        #for channel_handling in CI_loc CI_glob
+        for channel_handling in CI_glob
         do
             python -u run_longExp.py \
             --random_seed $random_seed \
-            --is_training 1 \
+            --is_training 0 \
+            --checkpoints \
             --root_path $root_path_name \
             --data_path $data_path_name \
             --model_id $model_id_name'_'$seq_len'_'$pred_len \
@@ -47,7 +49,7 @@ do
             --features M \
             --seq_len $seq_len \
             --pred_len $pred_len \
-            --enc_in 7 \
+            --enc_in 862 \
             --e_layers 3 \
             --n_heads 16 \
             --d_model 128 \
@@ -59,11 +61,11 @@ do
             --stride 8\
             --des 'Exp' \
             --train_epochs 100\
-            --patience 20\
+            --patience 10\
             --lradj 'TST'\
-            --pct_start 0.4\
+            --pct_start 0.2\
             --channel_handling $channel_handling \
-            --itr 1 --batch_size 128 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 24 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
     done
 done

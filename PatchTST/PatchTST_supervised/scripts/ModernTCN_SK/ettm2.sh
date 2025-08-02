@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=2:00:00
+#SBATCH --time=2:30:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -25,12 +25,13 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for random_seed in 2021
-#for random_seed in 2021 2022 2023 2024 2025
+#for random_seed in 2021
+for random_seed in 2024 2025
 do
     for pred_len in 96 192 336 720
     do
-        for channel_handling in CI_loc CI_glob CD Delta
+        for channel_handling in Delta
+        #for channel_handling in CI_loc CI_glob CD Delta
         do
             python -u run_longExp.py \
                 --random_seed $random_seed \
@@ -62,6 +63,7 @@ do
                 --lradj type3 \
                 --use_multi_scale 0 \
                 --channel_handling $channel_handling \
+                --delta_factor 0.5 \
                 --small_kernel_merged 0 \
                 >logs/LongForecasting/$model_name'_ETTm2_'$seq_len'_'$pred_len.log
         done

@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=24:00:00
+#SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=Linear_Delta-learn_ETTm1
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta-learn_ETTm1.out
+#SBATCH --job-name=Linear_Delta-learn_ETTm2_rs2
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta-learn_ETTm2_rs2.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -30,36 +30,9 @@ patience=20
 learning_rate=0.005
 
 
-#for random_seed in 
-#for random_seed in 2022 2023 2024 2025
-for random_seed in 2024 2025 2021
-do
-    ### CI local and global ### 
-    #for channel_handling in CI_glob
-    for channel_handling in CI_loc CI_glob
-    do
-        #for pred_len in 96
-        for pred_len in 96 192 336 720
-        do
-            python -u run_longExp.py \
-                --random_seed $random_seed \
-                --is_training 1 \
-                --root_path ./dataset/ \
-                --data_path ETTm1.csv \
-                --model_id ETTm1_$seq_len'_'$pred_len \
-                --model $model_name \
-                --data ETTm1 \
-                --features M \
-                --seq_len $seq_len \
-                --pred_len $pred_len \
-                --channel_handling $channel_handling \
-                --enc_in 7 \
-                --des 'Exp' \
-                --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
-                >logs/LongForecasting/$model_name'_'Ettm1_$seq_len'_'$pred_len.log
-        done
-    done
 
+for random_seed in 2021
+do
 ### CD and Delta for different cd_weight_decay ### 
     for channel_handling in CD Delta
     do
@@ -73,10 +46,10 @@ do
                     --random_seed $random_seed \
                     --is_training 1 \
                     --root_path ./dataset/ \
-                    --data_path ETTm1.csv \
-                    --model_id ETTm1_$seq_len'_'$pred_len \
+                    --data_path ETTm2.csv \
+                    --model_id ETTm2_$seq_len'_'$pred_len \
                     --model $model_name \
-                    --data ETTm1 \
+                    --data ETTm2 \
                     --features M \
                     --seq_len $seq_len \
                     --pred_len $pred_len \
@@ -84,8 +57,9 @@ do
                     --channel_handling $channel_handling \
                     --enc_in 7 \
                     --des 'Exp' \
+                    --skip_1st_epoch 1 \
                     --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
-                    >logs/LongForecasting/$model_name'_'Ettm1_$seq_len'_'$pred_len.log
+                    >logs/LongForecasting/$model_name'_'Ettm2_rs2_$seq_len'_'$pred_len.log
             done
         done
     done

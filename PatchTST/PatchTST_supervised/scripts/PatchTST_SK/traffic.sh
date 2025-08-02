@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=5:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -31,16 +31,18 @@ data_name=custom
 for random_seed in 2021
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 96 192 336 720
+    #for pred_len in 96 192 336 720
+    for pred_len in 192 336 720
     do
-        for channel_handling in CI_loc CI_glob
+        #for channel_handling in CI_loc CI_glob
+        for channel_handling in CI_glob
         do
             python -u run_longExp.py \
             --random_seed $random_seed \
             --is_training 1 \
             --root_path $root_path_name \
             --data_path $data_path_name \
-            --model_id $model_id_name_$seq_len'_'$pred_len \
+            --model_id $model_id_name'_'$seq_len'_'$pred_len \
             --model $model_name \
             --data $data_name \
             --features M \

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=3:00:00
+#SBATCH --time=12:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -28,8 +28,8 @@ data_path_name=weather.csv
 model_id_name=weather
 data_name=custom
 
-for random_seed in 2021
-#for random_seed in 2021 2022 2023 2024 2025
+#for random_seed in 2021
+for random_seed in 2022 2023 2024 2025
 do
     for pred_len in 96 192 336 720
     do
@@ -40,7 +40,7 @@ do
                 --is_training 1 \
                 --root_path $root_path_name \
                 --data_path $data_path_name \
-                --model_id $model_id_name_$seq_len'_'$pred_len \
+                --model_id $model_id_name'_'$seq_len'_'$pred_len \
                 --model $model_name \
                 --data $data_name \
                 --features M \
