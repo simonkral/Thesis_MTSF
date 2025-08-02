@@ -47,7 +47,10 @@ if __name__ == '__main__':
     parser.add_argument('--cd_weight_decay', type=float, default=0.0, help='Weight decay for CD term')
     parser.add_argument('--channel_handling', type=str, default="CI_glob", 
                         help='specifies how channels are handled, options:[CI_glob, CI_loc, CD, Delta]')
+    parser.add_argument('--delta_factor', type=float, default=1.0, 
+                        help='specifies delta factor for Delta model, 1.0: Final model = CI + CD, 0.5: Final model = 0.5*(CI + CD)')
     parser.add_argument('--optimizer', type=str, default="AdamW")#, help='Weight decay for CD term')
+    parser.add_argument('--skip_1st_epoch', type=int, default=0, help='Skip the first epoch of training, 0: do not skip, 1: skip')
     
     """
     # DWSC - Simon
@@ -164,7 +167,7 @@ if __name__ == '__main__':
     if args.is_training:
         for ii in range(args.itr):
             # setting record of experiments
-            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_rs{}_ch{}_cdwd{}_{}_{}'.format(
+            setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_rs{}_ch{}_cdwd{}_df{}_p{}_sk{}_{}_{}'.format(
                 args.model_id,
                 args.model,
                 args.data,
@@ -183,6 +186,9 @@ if __name__ == '__main__':
                 args.random_seed,   # added random seed to setting
                 args.channel_handling,  # added channel handling to setting
                 args.cd_weight_decay,  # added CD weight decay to setting
+                args.delta_factor,  # added delta factor to setting
+                args.patience,  # added patience to setting
+                args.skip_1st_epoch,  # added skip_1st_epoch to setting
                 args.des,
                 ii
             )
@@ -204,7 +210,7 @@ if __name__ == '__main__':
             torch.cuda.empty_cache()
     else:
         ii = 0
-        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_rs{}_ch{}_cdwd{}_{}_{}'.format(
+        setting = '{}_{}_{}_ft{}_sl{}_ll{}_pl{}_dm{}_nh{}_el{}_dl{}_df{}_fc{}_eb{}_dt{}_rs{}_ch{}_cdwd{}_df{}_p{}_sk{}_{}_{}'.format(
             args.model_id,
             args.model,
             args.data,
@@ -223,13 +229,24 @@ if __name__ == '__main__':
             args.random_seed,   # added random seed to setting
             args.channel_handling,  # added channel handling to setting
             args.cd_weight_decay,  # added CD weight decay to setting
+            args.delta_factor,  # added delta factor to setting
+            args.patience,  # added patience to setting
+            args.skip_1st_epoch,  # added skip_1st_epoch to setting
             args.des, 
             ii
         )
 
         exp = Exp(args)  # set experiments
+
+        print('>>>>>>>testing on training data: {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
+        #exp.test(setting, test=1, data_flag='train')
+        exp.test(setting, test=1, data_flag='train')   
+        
         print('>>>>>>>testing : {}<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<'.format(setting))
         exp.test(setting, test=1)
+
+ 
+        
         torch.cuda.empty_cache()
         
         wandb.finish()
