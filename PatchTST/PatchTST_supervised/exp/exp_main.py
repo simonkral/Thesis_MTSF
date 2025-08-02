@@ -16,6 +16,7 @@ import time
 import warnings
 import matplotlib.pyplot as plt
 import numpy as np
+import json
 
 import wandb
 
@@ -143,7 +144,10 @@ class Exp_Main(Exp_Basic):
         time_now = time.time()
 
         train_steps = len(train_loader)
-        early_stopping = EarlyStopping(patience=self.args.patience, verbose=True)
+        early_stopping = EarlyStopping(
+            patience=self.args.patience, 
+            verbose=True,
+            skip_1st_epoch=self.args.skip_1st_epoch)
 
         unfreeze_param = UnfreezeParam(patience=self.args.lambda_freeze_patience)
 
@@ -424,7 +428,16 @@ class Exp_Main(Exp_Basic):
                 "mse_per_channel_list": mse_per_channel_list,
                 #"mae_per_channel_table": mae_per_channel_table,
                 "mae_per_channel_list": mae_per_channel_list,
+                "setting_string": setting,
             })
+
+            mse_per_channel_list = [x.item() for x in mse_per_channel_list]
+            mae_per_channel_list = [x.item() for x in mae_per_channel_list]
+
+            with open(folder_path + "mse_per_channel_list.json", "w") as f:
+                json.dump(mse_per_channel_list, f)
+            with open(folder_path + "mae_per_channel_list.json", "w") as f:
+                json.dump(mae_per_channel_list, f)
         else:
             # Log to wandb:
             wandb.log({
@@ -437,6 +450,13 @@ class Exp_Main(Exp_Basic):
                 "mae_train_per_channel_list": mae_per_channel_list,
             })
 
+            mse_per_channel_list = [x.item() for x in mse_per_channel_list]
+            mae_per_channel_list = [x.item() for x in mae_per_channel_list]
+
+            with open(folder_path + "mse_train_per_channel_list.json", "w") as f:
+                json.dump(mse_per_channel_list, f)
+            with open(folder_path + "mae_train_per_channel_list.json", "w") as f:
+                json.dump(mae_per_channel_list, f)
         return
 
     def predict(self, setting, load=False):
