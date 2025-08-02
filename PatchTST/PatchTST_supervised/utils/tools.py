@@ -38,7 +38,7 @@ def adjust_learning_rate(optimizer, scheduler, epoch, args, printout=True):
 
 
 class EarlyStopping:
-    def __init__(self, patience=7, verbose=False, delta=0):
+    def __init__(self, patience=7, verbose=False, delta=0, skip_1st_epoch=0):
         self.patience = patience
         self.verbose = verbose
         self.counter = 0
@@ -46,8 +46,18 @@ class EarlyStopping:
         self.early_stop = False
         self.val_loss_min = np.inf
         self.delta = delta
+        self.skip_1st_epoch = skip_1st_epoch
+        self.epoch = 0  # Internal epoch tracker
 
     def __call__(self, val_loss, model, path):
+        self.epoch += 1
+
+        if self.skip_1st_epoch == 1 and self.epoch == 1:
+            # Skip early stopping on first epoch
+            if self.verbose:
+                print("Skipping early stopping for epoch 1 as requested.")
+            return
+
         score = -val_loss
         if self.best_score is None:
             self.best_score = score
