@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=12:00:00
+#SBATCH --time=06:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -32,11 +32,41 @@ learning_rate=0.005
 
 for random_seed in 2021
 do
-    ### CD and Delta for different cd_weight_decay ### 
-    for channel_handling in CD Delta
+    for channel_handling in Delta
     do
         #for cd_weight_decay in 0 1e-3
-        for cd_weight_decay in 0 1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1e-0
+        for cd_weight_decay in 1e-4
+        do 
+            #for pred_len in 96
+            for pred_len in 720
+            do
+                python -u run_longExp.py \
+                    --random_seed $random_seed \
+                    --is_training 1 \
+                    --root_path ./dataset/ \
+                    --data_path weather.csv \
+                    --model_id weather_$seq_len'_'$pred_len \
+                    --model $model_name \
+                    --data custom \
+                    --features M \
+                    --seq_len $seq_len \
+                    --pred_len $pred_len \
+                    --cd_weight_decay $cd_weight_decay \
+                    --channel_handling $channel_handling \
+                    --enc_in 21 \
+                    --des 'Exp' \
+                    --skip_1st_epoch 1 \
+                    --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
+                    >logs/LongForecasting/$model_name'_'Weather_rs2_$seq_len'_'$pred_len.log
+            done
+        done
+    done
+
+    ### CD and Delta for different cd_weight_decay ### 
+    for channel_handling in Delta
+    do
+        #for cd_weight_decay in 0 1e-3
+        for cd_weight_decay in 1e-3 1e-2 1e-1 1e-0
         do 
             #for pred_len in 96
             for pred_len in 96 192 336 720

@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=12:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=Linear_Delta-learn_ETTm2_rs2
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta-learn_ETTm2_rs2.out
+#SBATCH --job-name=Linear_Delta-learn_ETTm2_rs3
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta-learn_ETTm2_rs3.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -31,7 +31,8 @@ learning_rate=0.005
 
 
 
-for random_seed in 2021
+#for random_seed in 2021
+for random_seed in 2022 2023 2024 2025
 do
 ### CD and Delta for different cd_weight_decay ### 
     for channel_handling in CD Delta
@@ -59,7 +60,7 @@ do
                     --des 'Exp' \
                     --skip_1st_epoch 1 \
                     --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
-                    >logs/LongForecasting/$model_name'_'Ettm2_rs2_$seq_len'_'$pred_len.log
+                    >logs/LongForecasting/$model_name'_'Ettm2_rs3_$seq_len'_'$pred_len.log
             done
         done
     done

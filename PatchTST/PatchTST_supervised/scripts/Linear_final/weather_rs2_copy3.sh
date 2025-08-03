@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=16:00:00
+#SBATCH --time=20:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=Linear_Final_exchange
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Final_exchange.out
+#SBATCH --job-name=Linear_final_weather_rs5
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_final_weather_rs5.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -30,10 +30,9 @@ patience=20
 learning_rate=0.005
 
 
-#for random_seed in 2021
-for random_seed in 2022 2023 2024 2025
+for random_seed in 2024
 do
-### CD and Delta for different cd_weight_decay ### 
+    ### CD and Delta for different cd_weight_decay ### 
     for channel_handling in CD Delta
     do
         #for cd_weight_decay in 0 1e-3
@@ -46,8 +45,8 @@ do
                     --random_seed $random_seed \
                     --is_training 1 \
                     --root_path ./dataset/ \
-                    --data_path exchange_rate.csv \
-                    --model_id Exchange_$seq_len'_'$pred_len \
+                    --data_path weather.csv \
+                    --model_id weather_$seq_len'_'$pred_len \
                     --model $model_name \
                     --data custom \
                     --features M \
@@ -55,11 +54,11 @@ do
                     --pred_len $pred_len \
                     --cd_weight_decay $cd_weight_decay \
                     --channel_handling $channel_handling \
-                    --enc_in 8 \
+                    --enc_in 21 \
                     --des 'Exp' \
                     --skip_1st_epoch 1 \
                     --itr 1 --batch_size $batch_size --patience $patience --learning_rate $learning_rate \
-                    >logs/LongForecasting/$model_name'_'Exchange_$seq_len'_'$pred_len.log
+                    >logs/LongForecasting/$model_name'_'Weather_rs5_$seq_len'_'$pred_len.log
             done
         done
     done

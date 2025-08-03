@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=12:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -30,7 +30,8 @@ patience=20
 learning_rate=0.005
 
 
-for random_seed in 2021
+#for random_seed in 2021
+for random_seed in 2022 2023 2024 2025
 do
     ### CI local and global ### 
     #for channel_handling in CI_glob
