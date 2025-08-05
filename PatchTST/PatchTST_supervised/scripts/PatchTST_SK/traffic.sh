@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=24:00:00
+#SBATCH --time=28:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -28,11 +28,11 @@ data_path_name=traffic.csv
 model_id_name=traffic
 data_name=custom
 
-for random_seed in 2021
+for random_seed in 2022
 #for random_seed in 2021 2022 2023 2024 2025
 do
     #for pred_len in 96 192 336 720
-    for pred_len in 192 336 720
+    for pred_len in 96 192 336 720
     do
         #for channel_handling in CI_loc CI_glob
         for channel_handling in CI_glob

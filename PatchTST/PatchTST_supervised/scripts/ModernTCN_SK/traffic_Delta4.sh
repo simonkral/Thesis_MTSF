@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=ModernTCN_traffic_D3
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_traffic_D3.out
+#SBATCH --job-name=ModernTCN_traffic_D6
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_traffic_D6.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -28,7 +28,7 @@ model_name=ModernTCN
 for random_seed in 2022
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 336
+    for pred_len in 192
     do
         for channel_handling in Delta
         #for channel_handling in CI_loc CI_glob CD Delta
@@ -64,7 +64,7 @@ do
                 --small_kernel_merged 0 \
                 --channel_handling $channel_handling \
                 --delta_factor 0.5 \
-                >logs/LongForecasting/$model_name'_'trafficD3_$seq_len'_'$pred_len.log
+                >logs/LongForecasting/$model_name'_'trafficD6_$seq_len'_'$pred_len.log
         done
     done
 done

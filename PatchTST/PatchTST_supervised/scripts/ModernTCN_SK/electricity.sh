@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=4:00:00
+#SBATCH --time=10:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -25,10 +25,10 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for random_seed in 2022
+for random_seed in 2023
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 720
+    for pred_len in 96 192 336 720
     #for pred_len in 336
     do
         for channel_handling in CD

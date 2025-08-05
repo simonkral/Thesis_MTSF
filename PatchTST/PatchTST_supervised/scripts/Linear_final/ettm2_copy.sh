@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --time=24:00:00
+#SBATCH --time=05:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
@@ -31,14 +31,14 @@ learning_rate=0.005
 
 
 
-#for random_seed in 2021
-for random_seed in 2022 2023 2024 2025
+for random_seed in 2025
+#for random_seed in 2022 2023 2024 2025
 do
 ### CD and Delta for different cd_weight_decay ### 
-    for channel_handling in CD Delta
+    for channel_handling in Delta
     do
         #for cd_weight_decay in 0 1e-3
-        for cd_weight_decay in 0 1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1e-0
+        for cd_weight_decay in 1e-6 1e-5 1e-4 1e-3 1e-2 1e-1 1e-0
         do 
             #for pred_len in 96
             for pred_len in 96 192 336 720

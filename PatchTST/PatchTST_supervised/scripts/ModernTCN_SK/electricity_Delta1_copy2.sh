@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=26:00:00
+#SBATCH --time=24:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=ModernTCN_traffic_D3
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_traffic_D3.out
+#SBATCH --job-name=ModernTCN_electricity_D7
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_electricity_D7.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -25,21 +25,23 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for random_seed in 2022
+for random_seed in 2024
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 336
+    #for pred_len in 96 192 336 720
+    for pred_len in 336 720
     do
         for channel_handling in Delta
+        #for channel_handling in CI_glob CD Delta
         #for channel_handling in CI_loc CI_glob CD Delta
         do
             python -u run_longExp.py \
                 --random_seed $random_seed \
                 --is_training 1 \
-                --model_id Traffic_$seq_len'_'$pred_len \
+                --model_id electricity_$seq_len'_'$pred_len \
                 --model $model_name \
                 --root_path ./dataset/ \
-                --data_path traffic.csv \
+                --data_path electricity.csv \
                 --data custom \
                 --features M \
                 --seq_len $seq_len \
@@ -52,19 +54,19 @@ do
                 --small_size 5 \
                 --dims 64 64 64 64 \
                 --head_dropout 0.0 \
-                --enc_in 862 \
+                --enc_in 321 \
                 --dropout 0.9 \
                 --itr 1 \
                 --train_epochs 100 \
                 --batch_size 32 \
                 --patience 10 \
-                --learning_rate 0.00005 \
+                --learning_rate 0.0001 \
                 --des Exp \
                 --use_multi_scale 0 \
                 --small_kernel_merged 0 \
                 --channel_handling $channel_handling \
                 --delta_factor 0.5 \
-                >logs/LongForecasting/$model_name'_'trafficD3_$seq_len'_'$pred_len.log
+                >logs/LongForecasting/$model_name'_'electricityD7_$seq_len'_'$pred_len.log
         done
     done
 done

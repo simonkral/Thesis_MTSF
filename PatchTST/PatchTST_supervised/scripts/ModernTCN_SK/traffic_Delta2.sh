@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=24:00:00
+#SBATCH --time=26:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=ModernTCN_traffic_D
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_traffic_D.out
+#SBATCH --job-name=ModernTCN_traffic_D4
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/ModernTCN_traffic_D4.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -25,10 +25,10 @@ fi
 seq_len=336
 model_name=ModernTCN
 
-for random_seed in 2021
+for random_seed in 2022
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 192
+    for pred_len in 720
     do
         for channel_handling in Delta
         #for channel_handling in CI_loc CI_glob CD Delta
@@ -64,7 +64,7 @@ do
                 --small_kernel_merged 0 \
                 --channel_handling $channel_handling \
                 --delta_factor 0.5 \
-                >logs/LongForecasting/$model_name'_'trafficD_$seq_len'_'$pred_len.log
+                >logs/LongForecasting/$model_name'_'trafficD4_$seq_len'_'$pred_len.log
         done
     done
 done

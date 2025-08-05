@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=PatchTST_Electricity
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_Electricity.out
+#SBATCH --job-name=PatchTST_Electricity2
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_Electricity2.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -28,7 +28,7 @@ data_path_name=electricity.csv
 model_id_name=Electricity
 data_name=custom
 
-for random_seed in 2023
+for random_seed in 2025
 #for random_seed in 2021 2022 2023 2024 2025
 do
     for pred_len in 96 192 336 720
@@ -64,7 +64,7 @@ do
             --lradj 'TST'\
             --pct_start 0.2\
             --channel_handling $channel_handling \
-            --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_rs2'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
     done
 done

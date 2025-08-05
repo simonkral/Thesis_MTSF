@@ -1,13 +1,13 @@
 #!/bin/bash
-#SBATCH --time=13:00:00
+#SBATCH --time=28:00:00
 #SBATCH --nodes=1
 #SBATCH --ntasks=1
 #SBATCH --partition=gpu_h100_il
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=PatchTST_Electricity
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_Electricity.out
+#SBATCH --job-name=PatchTST_traffic2
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_traffic2.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -24,15 +24,15 @@ seq_len=336
 model_name=PatchTST
 
 root_path_name=./dataset/
-data_path_name=electricity.csv
-model_id_name=Electricity
+data_path_name=traffic.csv
+model_id_name=traffic
 data_name=custom
 
 for random_seed in 2023
 #for random_seed in 2021 2022 2023 2024 2025
 do
-    for pred_len in 96 192 336 720
     #for pred_len in 96 192 336 720
+    for pred_len in 96 192 336 720
     do
         #for channel_handling in CI_loc CI_glob
         for channel_handling in CI_glob
@@ -48,7 +48,7 @@ do
             --features M \
             --seq_len $seq_len \
             --pred_len $pred_len \
-            --enc_in 321 \
+            --enc_in 862 \
             --e_layers 3 \
             --n_heads 16 \
             --d_model 128 \
@@ -64,7 +64,7 @@ do
             --lradj 'TST'\
             --pct_start 0.2\
             --channel_handling $channel_handling \
-            --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 24 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_2'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
     done
 done
