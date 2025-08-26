@@ -23,10 +23,9 @@
 - [Visualization of results](visualization/visualize_results_final.ipynb)
 - The respective illustrations and error tables end up in ```./visualization/plots/Thesis```
 
+## Acknowledgement
 
-
-
-
+This repository is based on the official implementation of [PatchTST](https://github.com/yuqinie98/PatchTST) and adopts code from the official implementation of [ModernTCN](https://github.com/luodhhh/ModernTCN)
 
 
 
