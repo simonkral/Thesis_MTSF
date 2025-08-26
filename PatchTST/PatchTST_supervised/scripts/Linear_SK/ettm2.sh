@@ -7,11 +7,7 @@
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
 #SBATCH --job-name=Linear_Delta-learn_ETTm2
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/Linear_Delta-learn_ETTm2.out
 
-source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
-conda activate PatchTST
-module load devel/cuda/11.8
 
 # add --individual for DLinear-I
 if [ ! -d "./logs" ]; then

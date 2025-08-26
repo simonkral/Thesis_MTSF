@@ -1,15 +1,14 @@
-Test:
-
 ## Preparation
-- Download benchmark datasets from [Autoformer](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy) to ```./PatchTST/PatchTST_supervised/dataset```
 - Install requirements via [environment.yml](environment.yml) or 
+- Download benchmark datasets from [Autoformer](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy) to ```./PatchTST/PatchTST_supervised/dataset```
+
 
 
 
 ## Create time lag data example
 - [Jupyter notebook for creating the time lag data example](thesis_create_data/shower.ipynb)
 
-## Scripts
+## Scripts for running the experiments
 - [Folder with scripts for Linear](PatchTST/PatchTST_supervised/scripts/Linear_SK)
 - [Folder with scripts for ModernTCN](PatchTST/PatchTST_supervised/scripts/ModernTCN_SK)
 - [Folder with sripts for PatchTST](PatchTST/PatchTST_supervised/scripts/PatchTST_SK)
@@ -20,6 +19,14 @@ Test:
 - [PatchTST](PatchTST/PatchTST_supervised/models/PatchTST.py)
 
 ## Visualization of results
+
+
+
+
+
+
+
+
 
 
 # Machine Learning Project Template
