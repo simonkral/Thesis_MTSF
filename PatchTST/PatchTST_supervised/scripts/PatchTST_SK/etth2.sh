@@ -29,8 +29,8 @@ model_id_name=ETTh2
 data_name=ETTh2
 
 
-#for random_seed in 2021
-for random_seed in 2022 2023 2024 2025
+
+for random_seed in 2021 2022 2023 2024 2025
 do
     for pred_len in 96 192 336 720
     do

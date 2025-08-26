@@ -29,8 +29,9 @@ data_path_name=national_illness.csv
 model_id_name=national_illness
 data_name=custom
 
-#for random_seed in 2021
-for random_seed in 2022 2023 2024 2025
+
+
+for random_seed in 2021 2022 2023 2024 2025
 do
     for pred_len in 24 36 48 60
     do

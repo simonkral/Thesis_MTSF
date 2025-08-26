@@ -6,8 +6,8 @@
 #SBATCH --gres=gpu:1
 #SBATCH --mem=100G
 #SBATCH --cpus-per-task=16
-#SBATCH --job-name=PatchTST_traffic
-#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_traffic.out
+#SBATCH --job-name=PatchTST_traffic1
+#SBATCH --output=/pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/slurm/PatchTST_traffic1.out
 
 source /pfs/work9/workspace/scratch/ma_skral-SK_thesis_2025/Thesis_MTSF/miniconda3/etc/profile.d/conda.sh
 conda activate PatchTST
@@ -28,13 +28,11 @@ data_path_name=traffic.csv
 model_id_name=traffic
 data_name=custom
 
-for random_seed in 2022
-#for random_seed in 2021 2022 2023 2024 2025
+
+for random_seed in 2021 2022 2023 2024 2025
 do
-    #for pred_len in 96 192 336 720
     for pred_len in 96 192 336 720
     do
-        #for channel_handling in CI_loc CI_glob
         for channel_handling in CI_glob
         do
             python -u run_longExp.py \
@@ -64,7 +62,7 @@ do
             --lradj 'TST'\
             --pct_start 0.2\
             --channel_handling $channel_handling \
-            --itr 1 --batch_size 24 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 24 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_1'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
     done
 done

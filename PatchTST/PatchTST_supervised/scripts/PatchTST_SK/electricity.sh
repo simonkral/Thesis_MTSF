@@ -28,13 +28,11 @@ data_path_name=electricity.csv
 model_id_name=Electricity
 data_name=custom
 
-for random_seed in 2023
-#for random_seed in 2021 2022 2023 2024 2025
+
+for random_seed in 2021 2022 2023 2024 2025
 do
     for pred_len in 96 192 336 720
-    #for pred_len in 96 192 336 720
     do
-        #for channel_handling in CI_loc CI_glob
         for channel_handling in CI_glob
         do
             python -u run_longExp.py \
@@ -64,7 +62,7 @@ do
             --lradj 'TST'\
             --pct_start 0.2\
             --channel_handling $channel_handling \
-            --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_'$model_id_name'_'$seq_len'_'$pred_len.log 
+            --itr 1 --batch_size 32 --learning_rate 0.0001 >logs/LongForecasting/$model_name'_rs2'$model_id_name'_'$seq_len'_'$pred_len.log 
         done
     done
 done
