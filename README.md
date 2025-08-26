@@ -1,12 +1,14 @@
 Test:
 
+
+
 ## Create time lag data example
-[See the script](thesis_create_data/shower.ipynb)
+- [Jupyter notebook for creating the time lag data example](thesis_create_data/shower.ipynb)
 
 ## Scripts
-[Go to the folder with scripts for Linear](PatchTST/PatchTST_supervised/scripts/Linear_SK)
-[Go to the folder with scripts for ModernTCN](PatchTST/PatchTST_supervised/scripts/ModernTCN_SK)
-[Go to the folder with scripts for PatchTST](PatchTST/PatchTST_supervised/scripts/PatchTST_SK)
+- [Folder with scripts for Linear](PatchTST/PatchTST_supervised/scripts/Linear_SK)
+- [Folder with scripts for ModernTCN](PatchTST/PatchTST_supervised/scripts/ModernTCN_SK)
+- [Folder with sripts for PatchTST](PatchTST/PatchTST_supervised/scripts/PatchTST_SK)
 
 
 
