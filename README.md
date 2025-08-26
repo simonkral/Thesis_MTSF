@@ -1,5 +1,9 @@
 Test:
 
+## Preparation
+- Benchmark datasets
+- Environment
+
 
 
 ## Create time lag data example
@@ -10,6 +14,12 @@ Test:
 - [Folder with scripts for ModernTCN](PatchTST/PatchTST_supervised/scripts/ModernTCN_SK)
 - [Folder with sripts for PatchTST](PatchTST/PatchTST_supervised/scripts/PatchTST_SK)
 
+## Model Files
+- [Linear](PatchTST/PatchTST_supervised/models/_Linear_final.py)
+- [ModernTCN](PatchTST/PatchTST_supervised/models/_ModernTCN.py)
+- [PatchTST](PatchTST/PatchTST_supervised/models/PatchTST.py)
+
+## Visualization of results
 
 
 # Machine Learning Project Template
