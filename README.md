@@ -20,7 +20,9 @@
 
 ## Visualization of results
 - [Visualization of predictions](visualization/visualize_predictions_final.ipynb)
-- [Visualization of results](visualization/visualize_results_final.ipynb), respective illustrations and error tables end up in ```./visualization/plots/Thesis```
+- [Visualization of results](visualization/visualize_results_final.ipynb)
+- The respective illustrations and error tables end up in ```./visualization/plots/Thesis```
+
 
 
 
