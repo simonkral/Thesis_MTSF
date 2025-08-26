@@ -1,3 +1,15 @@
+Test:
+
+## Create time lag data example
+[See the script](thesis_create_data/shower.ipynb)
+
+## Scripts
+[Go to the folder with scripts for Linear](PatchTST/PatchTST_supervised/scripts/Linear_SK)
+[Go to the folder with scripts for ModernTCN](PatchTST/PatchTST_supervised/scripts/ModernTCN_SK)
+[Go to the folder with scripts for PatchTST](PatchTST/PatchTST_supervised/scripts/PatchTST_SK)
+
+
+
 # Machine Learning Project Template
 
 Machine learning projects can be extraordinarily complex involving data collection, preprocessing, model training, model evaluation, as well as visualization and reporting. Often, the starting point for many is to use Jupyter Notebooks, which are excellent for trying out new ideas and exploring data, but fall short as the project becomes larger as often this results in long, labyrinthine files.
