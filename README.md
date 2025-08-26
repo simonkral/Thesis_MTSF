@@ -1,8 +1,8 @@
 Test:
 
 ## Preparation
-- Benchmark datasets
-- Environment
+- Download benchmark datasets from [Autoformer](https://drive.google.com/drive/folders/1ZOYpTUa82_jCcxIdTmyr0LXQfvaM9vIy) to ```./PatchTST/PatchTST_supervised/dataset```
+- Install requirements via [environment.yml](environment.yml) or 
 
 
 
