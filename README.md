@@ -16,6 +16,7 @@
 ## Visualization of results
 - [Jupyter notebook for the visualization of predictions](visualization/visualize_predictions_final.ipynb)
 - [Jupyter notebook for the visualization of results](visualization/visualize_results_final.ipynb)
+- Data that for the visualization notebooks is stored in this [folder](visualization/data)
 - The respective illustrations and error tables end up in ```./visualization/plots/Thesis```
 
 
