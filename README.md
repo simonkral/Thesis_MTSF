@@ -14,7 +14,7 @@
 
 
 ## Visualization of results
-- This [jupyter notebook](visualization/visualize_predictions_final.ipynb) generates all illustrations and MSE/MAE tables shown in the thesis based on the run/prediction data that is stored in this [folder](visualization/data). The respective illustrations and tables end up in ```./visualization/plots/Thesis```.
+- This [jupyter notebook](visualization/visualize_results_final.ipynb) generates all illustrations and MSE/MAE tables shown in the thesis based on the run/prediction data that is stored in this [folder](visualization/data). The respective illustrations and tables end up in ```./visualization/plots/Thesis```.
 
 
 ## Model Files
