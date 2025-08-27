@@ -49,7 +49,7 @@ if __name__ == '__main__':
                         help='specifies how channels are handled, options:[CI_glob, CI_loc, CD, Delta]')
     parser.add_argument('--delta_factor', type=float, default=1.0, 
                         help='specifies delta factor for Delta model, 1.0: Final model = CI + CD, 0.5: Final model = 0.5*(CI + CD)')
-    parser.add_argument('--optimizer', type=str, default="AdamW")#, help='Weight decay for CD term')
+    parser.add_argument('--optimizer', type=str, default="AdamW", help='For descriptive purposes only')
     parser.add_argument('--skip_1st_epoch', type=int, default=0, help='Skip the first epoch of training, 0: do not skip, 1: skip')
     
     """

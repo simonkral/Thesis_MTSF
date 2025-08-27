@@ -14,10 +14,7 @@
 
 
 ## Visualization of results
-- [Jupyter notebook for the visualization of predictions](visualization/visualize_predictions_final.ipynb)
-- [Jupyter notebook for the visualization of results](visualization/visualize_results_final.ipynb)
-- Data that is used by the visualization notebooks is stored in this [folder](visualization/data)
-- The respective illustrations and error tables end up in ```./visualization/plots/Thesis```
+- This [jupyter notebook](visualization/visualize_predictions_final.ipynb) generates all illustrations and MSE/MAE tables based on the run/prediction data that is stored in this [folder](visualization/data). The respective illustrations and tables end up in ```./visualization/plots/Thesis```.
 
 
 ## Model Files
